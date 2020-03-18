@@ -5,4 +5,4 @@ A modern, cross-platform [Zermelo](https://www.zermelo.nl/) app with some extra 
 [GitHub Project Board](https://github.com/Netlob/zeta/projects/1)
 
 -------
-[MIT License](https://github.com/Netlob/zeta/blob/master/LICENSE)
+[GPL-3.0 license](https://github.com/Netlob/zeta/blob/master/LICENSE)
