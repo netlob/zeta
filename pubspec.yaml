@@ -20,6 +20,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  provider:
+
   # flutter_pulltorefresh: ^1.5.8
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -71,3 +73,53 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/NunitoSans-Black.ttf
+          weight: 900
+        - asset: assets/fonts/NunitoSans-BlackItalic.ttf
+          weight: 900
+          style: italic
+
+        - asset: assets/fonts/NunitoSans-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/NunitoSans-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+
+        - asset: assets/fonts/NunitoSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NunitoSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+
+        - asset: assets/fonts/NunitoSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/NunitoSans-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+
+        # - asset: assets/fonts/NunitoSans-Medium.ttf
+        #   weight: 500
+        # - asset: assets/fonts/NunitoSans-MediumItalic.ttf
+        #   weight: 500
+        #   style: italic
+
+        - asset: assets/fonts/NunitoSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/NunitoSans-Italic.ttf
+          weight: 400
+          style: italic
+
+        - asset: assets/fonts/NunitoSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/NunitoSans-LightItalic.ttf
+          weight: 300
+          style: italic
+
+        - asset: assets/fonts/NunitoSans-Light.ttf
+          weight: 100
+        - asset: assets/fonts/NunitoSans-LightItalic.ttf
+          weight: 100
+          style: italic

@@ -81,21 +81,21 @@ class DayOverview extends StatelessWidget {
                           appointment:
                               Appointment(title: "Geschiedenis", hour: "4"),
                         ),
-                        AppointmentCard(
-                          appointment:
-                              Appointment(title: "Wiskunde B", hour: "5"),
-                        ),
+                        // AppointmentCard(
+                        //   appointment:
+                        //       Appointment(title: "Wiskunde B", hour: "5"),
+                        // ),
                         AppointmentCard(
                           appointment:
                               Appointment(title: "Wiskunde B", hour: "6"),
                         ),
-                        AppointmentCard(
-                          appointment: Appointment(title: "Frans", hour: "7"),
-                        ),
-                        AppointmentCard(
-                          appointment:
-                              Appointment(title: "Mentorles", hour: "8"),
-                        ),
+                        // AppointmentCard(
+                        //   appointment: Appointment(title: "Frans", hour: "7"),
+                        // ),
+                        // AppointmentCard(
+                        //   appointment:
+                        //       Appointment(title: "Mentorles", hour: "8"),
+                        // ),
                       ],
                     ),
                   ))))

@@ -17,7 +17,7 @@ class AppointmentCard extends StatelessWidget {
           color: AppColors.themes[AppColors.theme]["appointmentBackground"],
           // border: Border(bottom: BorderSide(color: Colors.black12))
         ),
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         // margin: EdgeInsets.only(top: 3, bottom: 3, left: 10),
         child: //ConstrainedBox(
             // constraints: const BoxConstraints(minWidth: double.infinity),
@@ -35,7 +35,7 @@ class AppointmentCard extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 5, 0, 10),
+                    padding: EdgeInsets.fromLTRB(15, 8, 0, 13),
                     decoration: BoxDecoration(
                       // color: Colors.white,
                       borderRadius: BorderRadius.circular(15.0),

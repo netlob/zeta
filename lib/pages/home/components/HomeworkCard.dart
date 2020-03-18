@@ -14,7 +14,7 @@ class HomeworkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 15, right: 7),
-      margin: EdgeInsets.only(bottom: 110, right: 20, top: 60),
+      margin: EdgeInsets.only(bottom: 105, right: 20, top: 60),
       decoration: BoxDecoration(
         color: AppColors.themes[AppColors.theme]["homeworkBackground"],
         borderRadius: BorderRadius.circular(15),
@@ -30,7 +30,7 @@ class HomeworkCard extends StatelessWidget {
           )
         ],
       ),
-      height: 130,
+      height: 135,
       width: 250,
       child: Stack(
         children: <Widget>[

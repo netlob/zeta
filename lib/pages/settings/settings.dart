@@ -11,17 +11,14 @@ import 'package:zeta/pages/home/components/HomeworkCard.dart';
 // import 'package:zeta/splash.dart';
 // import 'package:zeta/fadeonscroll.dart';
 
-class AppointmentDetails extends StatefulWidget {
-  final Appointment appointment;
-  AppointmentDetails({Key key, this.appointment}) : super(key: key);
+class Settings extends StatefulWidget {
+  Settings({Key key}) : super(key: key);
 
-  _AppointmentDetailsState createState() => _AppointmentDetailsState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _AppointmentDetailsState extends State<AppointmentDetails>
-    with WidgetsBindingObserver {
+class _SettingsState extends State<Settings> with WidgetsBindingObserver {
   final ScrollController scrollController = ScrollController();
-  Appointment appointment;
 
   @override
   void initState() {
@@ -66,7 +63,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                                   color: AppColors.themes[AppColors.theme]
                                       ["backgroundAccent"]),
                               height: 210),
-                          clipper: BottomWaveClipper(),
+                          clipper: BottomWaveLeft(),
                         ),
                         Container(
                           padding: EdgeInsets.fromLTRB(10, 20, 20, 20),
@@ -88,7 +85,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                           ),
                         ),
                         Container(
-                            margin: EdgeInsets.fromLTRB(65, 20, 20, 10),
+                            margin: EdgeInsets.fromLTRB(30, 80, 20, 10),
                             child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -99,20 +96,19 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          widget.appointment.title,
+                                          "Hey Sjoerd",
                                           // "Vandaag",
                                           style: TextStyle(
                                               fontSize: 35,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
                                         ),
-                                        Text("HH:MM - HH:MM",
+                                        Text("Klas 5H1 - AH 1823",
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.white))
-                                      ]),
-                                  Text(widget.appointment.hour)
+                                      ])
                                   // Icon(Icons.arrow_drop_down, color: Colors.white)
                                 ])),
                         Container(
@@ -120,15 +116,86 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                             height: 280,
                             child: _buildCarousel(context)),
                         Container(
-                            margin: EdgeInsets.only(top: 250),
+                            margin: EdgeInsets.only(top: 200),
                             padding: EdgeInsets.all(50),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                    "idk hier wat info ofzo? geen idee wat zermelo allemaal meegeeft",
+                                Text("Statussen",
                                     style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25,
                                         color: AppColors.themes[AppColors.theme]
                                             ["homeworkTitle"])),
+                                Row(children: <Widget>[
+                                  Text("Zermelo:",
+                                      style: TextStyle(
+                                          color:
+                                              AppColors.themes[AppColors.theme]
+                                                  ["homeworkTitle"])),
+                                  Text("Niet Gekoppeld",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              AppColors.themes[AppColors.theme]
+                                                  ["homeworkTitle"]))
+                                ]),
+                                Row(children: <Widget>[
+                                  Text("Appie:",
+                                      style: TextStyle(
+                                          color:
+                                              AppColors.themes[AppColors.theme]
+                                                  ["homeworkTitle"])),
+                                  Text("WIP",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              AppColors.themes[AppColors.theme]
+                                                  ["homeworkTitle"]))
+                                ]),
+                                Divider(),
+                                FlatButton(
+                                  color: AppColors.themes[AppColors.theme]
+                                      ["backgroundAccent"],
+                                  child: Text(
+                                    "Dark mode",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ),
+                                  onPressed: () {
+                                    Provider.of<ThemeChanger>(context,
+                                            listen: false)
+                                        .setTheme('dark');
+                                    AppColors.theme = "dark";
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(18.0),
+                                  ),
+                                ),
+                                FlatButton(
+                                  color: AppColors.themes[AppColors.theme]
+                                      ["backgroundAccent"],
+                                  child: Text(
+                                    "Light mode",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ),
+                                  onPressed: () {
+                                    Provider.of<ThemeChanger>(context,
+                                            listen: false)
+                                        .setTheme('light');
+                                    AppColors.theme = "light";
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(18.0),
+                                  ),
+                                ),
                               ],
                             )),
                         // ])
@@ -138,23 +205,23 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
 
   Widget _buildCarousel(BuildContext context) {
     final classes = [
-      widget.appointment.title,
-      widget.appointment.title,
-      widget.appointment.title,
-      widget.appointment.title,
-      widget.appointment.title,
+      // widget.appointment.title,
+      // widget.appointment.title,
+      // widget.appointment.title,
+      // widget.appointment.title,
+      // widget.appointment.title,
     ];
     final tasks = [
-      widget.appointment.title + " huiswerk",
-      widget.appointment.title + " huiswerk",
-      widget.appointment.title + " huiswerk",
-      widget.appointment.title + " huiswerk",
-      widget.appointment.title + " huiswerk",
+      // widget.appointment.title + " huiswerk",
+      // widget.appointment.title + " huiswerk",
+      // widget.appointment.title + " huiswerk",
+      // widget.appointment.title + " huiswerk",
+      // widget.appointment.title + " huiswerk",
     ];
     final dates = ["Vandaag", "Morgen", "Morgen", "Overmorgen", "Overmorgen"];
     return PageView.builder(
       controller: PageController(viewportFraction: 0.8),
-      itemCount: 5,
+      itemCount: 0,
       itemBuilder: (BuildContext context, int itemIndex) {
         return HomeworkCard(
           title: classes[itemIndex],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+import 'package:zeta/components/bottomnavbar.dart';
 import 'package:zeta/utils/theme.dart';
 import 'package:zeta/utils/wave.dart';
 
@@ -47,170 +49,146 @@ class _SecondCalendarAppState extends State<SecondCalendarApp>
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
-    debugPrint(AppColors.theme.toString());
+    ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Zeta',
+        theme: _themeChanger.getTheme(),
         home: Container(
             color: AppColors.themes[AppColors.theme]["backgroundAccent"],
             child: SafeArea(
                 bottom: false,
                 child: Scaffold(
-                  body: Container(
-                      color: AppColors.themes[AppColors.theme]["background"],
-                      child:
-                          // Column(children: [
-                          Stack(children: <Widget>[
-                        // Stack(children: <Widget>[
-                        ClipPath(
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: AppColors.themes[AppColors.theme]
-                                      ["backgroundAccent"]),
-                              height: 210),
-                          clipper: BottomWaveClipper(),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              IconButton(
-                                  icon: Icon(
-                                    Icons.calendar_today,
-                                    color: Colors.transparent,
-                                  ),
-                                  onPressed: () {}),
-                              IconButton(
-                                  icon: Icon(Icons.search, color: Colors.white),
-                                  onPressed: () {}),
-                            ],
+                    body: Container(
+                        color: AppColors.themes[AppColors.theme]["background"],
+                        child:
+                            // Column(children: [
+                            Stack(children: <Widget>[
+                          // Stack(children: <Widget>[
+                          ClipPath(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppColors.themes[AppColors.theme]
+                                        ["backgroundAccent"]),
+                                height: 210),
+                            clipper: BottomWaveLeft(),
                           ),
-                        ),
-                        Container(
-                            margin:
-                                EdgeInsets.fromLTRB(35, 20, 20, 10), // T: 130
-                            child: Row(children: <Widget>[
-                              Column(
-                                  // mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      this.page.toString(),
-                                      // "Vandaag",
-                                      style: TextStyle(
-                                          fontSize: 35,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                    Text(this.date.toString(),
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white))
-                                  ]),
-                              // Icon(Icons.arrow_drop_down, color: Colors.white)
-                            ])),
-                        Container(
-                            margin: EdgeInsets.only(top: 60),
-                            height: 280,
-                            child: _buildCarousel(context)),
-                        Container(
-                            margin: EdgeInsets.only(top: 250),
-                            child: PageView(
-                              controller: _pageController,
-                              scrollDirection: Axis.horizontal,
-                              onPageChanged: (index) {
-                                setState(() {
-                                  switch (index) {
-                                    case 0:
-                                      page = "Eergisteren";
-                                      date = "16 maart 2020";
-                                      break;
-                                    case 1:
-                                      page = "Gisteren";
-                                      date = "17 maart 2020";
-                                      break;
-                                    case 2:
-                                      page = "Vandaag";
-                                      date = "18 maart 2020";
-                                      break;
-                                    case 3:
-                                      page = "Morgen";
-                                      date = "19 maart 2020";
-                                      break;
-                                    default:
-                                      page = "Overmorgen";
-                                      date = "20 maart 2020";
-                                      break;
-                                  }
-                                });
-                              },
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                DayOverview(
-                                    abr: "MAA",
-                                    date: "16",
-                                    color: AppColors.themes[AppColors.theme]
-                                        ["appointmentDate"]),
-                                DayOverview(
-                                    abr: "DIN",
-                                    date: "17",
-                                    color: AppColors.themes[AppColors.theme]
-                                        ["appointmentDate"]),
-                                DayOverview(
-                                    abr: "WOE",
-                                    date: "18",
-                                    color: Color.fromRGBO(123, 96, 247, 1)),
-                                DayOverview(
-                                    abr: "DON",
-                                    date: "19",
-                                    color: AppColors.themes[AppColors.theme]
-                                        ["appointmentDate"]),
-                                DayOverview(
-                                    abr: "VRIJ",
-                                    date: "20",
-                                    color: AppColors.themes[AppColors.theme]
-                                        ["appointmentDate"])
+                                IconButton(
+                                    icon: Icon(
+                                      Icons.calendar_today,
+                                      color: Colors.transparent,
+                                    ),
+                                    onPressed: () {}),
+                                IconButton(
+                                    icon:
+                                        Icon(Icons.search, color: Colors.white),
+                                    onPressed: () {}),
                               ],
-                            ))
-                        // ])
-                      ])),
-                  floatingActionButtonLocation:
-                      FloatingActionButtonLocation.endFloat,
-                  floatingActionButton: FloatingActionButton(
-                    child: const Icon(Icons.search),
-                    backgroundColor: Color.fromRGBO(252, 202, 46, 1),
-                    onPressed: () {},
-                  ),
-                  bottomNavigationBar: BottomAppBar(
-                    notchMargin: 6.0,
-                    child: new Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.list),
-                          iconSize: 30,
-                          color: Color.fromRGBO(111, 88, 234, 1),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.calendar_today),
-                          iconSize: 20,
-                          color: Color.fromRGBO(111, 88, 234, 0.5),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.account_circle),
-                          iconSize: 20,
-                          color: Color.fromRGBO(111, 88, 234, 0.5),
-                          onPressed: () {},
-                        ),
-                      ],
+                            ),
+                          ),
+                          Container(
+                              margin:
+                                  EdgeInsets.fromLTRB(35, 20, 20, 10), // T: 130
+                              child: Row(children: <Widget>[
+                                Column(
+                                    // mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        this.page.toString(),
+                                        // "Vandaag",
+                                        style: TextStyle(
+                                            fontSize: 35,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      Text(this.date.toString(),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white))
+                                    ]),
+                                // Icon(Icons.arrow_drop_down, color: Colors.white)
+                              ])),
+                          Container(
+                              margin: EdgeInsets.only(top: 60),
+                              height: 280,
+                              child: _buildCarousel(context)),
+                          Container(
+                              margin: EdgeInsets.only(top: 250),
+                              child: PageView(
+                                controller: _pageController,
+                                scrollDirection: Axis.horizontal,
+                                onPageChanged: (index) {
+                                  setState(() {
+                                    switch (index) {
+                                      case 0:
+                                        page = "Eergisteren";
+                                        date = "16 maart 2020";
+                                        break;
+                                      case 1:
+                                        page = "Gisteren";
+                                        date = "17 maart 2020";
+                                        break;
+                                      case 2:
+                                        page = "Vandaag";
+                                        date = "18 maart 2020";
+                                        break;
+                                      case 3:
+                                        page = "Morgen";
+                                        date = "19 maart 2020";
+                                        break;
+                                      default:
+                                        page = "Overmorgen";
+                                        date = "20 maart 2020";
+                                        break;
+                                    }
+                                  });
+                                },
+                                children: <Widget>[
+                                  DayOverview(
+                                      abr: "MAA",
+                                      date: "16",
+                                      color: AppColors.themes[AppColors.theme]
+                                          ["appointmentDate"]),
+                                  DayOverview(
+                                      abr: "DIN",
+                                      date: "17",
+                                      color: AppColors.themes[AppColors.theme]
+                                          ["appointmentDate"]),
+                                  DayOverview(
+                                      abr: "WOE",
+                                      date: "18",
+                                      color: Color.fromRGBO(123, 96, 247, 1)),
+                                  DayOverview(
+                                      abr: "DON",
+                                      date: "19",
+                                      color: AppColors.themes[AppColors.theme]
+                                          ["appointmentDate"]),
+                                  DayOverview(
+                                      abr: "VRIJ",
+                                      date: "20",
+                                      color: AppColors.themes[AppColors.theme]
+                                          ["appointmentDate"])
+                                ],
+                              ))
+                          // ])
+                        ])),
+                    floatingActionButtonLocation:
+                        FloatingActionButtonLocation.endFloat,
+                    floatingActionButton: FloatingActionButton(
+                      child: const Icon(Icons.search),
+                      backgroundColor: Color.fromRGBO(252, 202, 46, 1),
+                      onPressed: () {},
                     ),
-                  ),
-                ))));
+                    bottomNavigationBar: BottomNavBar()))));
   }
 
   Widget _buildCarousel(BuildContext context) {
