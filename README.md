@@ -1,16 +1,8 @@
 # zeta
 
-A new Flutter project.
+A modern, cross-platform [Zermelo](https://www.zermelo.nl/) app with some extra features, like notifications on a schedule-change. Based on [Flutter](https://flutter.dev/).
 
-## Getting Started
+[GitHub Project Board](https://github.com/Netlob/zeta/projects/1)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+-------
+[MIT License](https://github.com/Netlob/zeta/blob/master/LICENSE)
