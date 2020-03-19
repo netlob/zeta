@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeta/components/bottomnavbar.dart';
 import 'package:zeta/utils/theme.dart';
 import 'package:zeta/utils/wave.dart';
@@ -11,14 +12,13 @@ import 'package:zeta/pages/home/components/HomeworkCard.dart';
 // import 'package:zeta/splash.dart';
 // import 'package:zeta/fadeonscroll.dart';
 
-class SecondCalendarApp extends StatefulWidget {
-  SecondCalendarApp({Key key}) : super(key: key);
+class HomeView extends StatefulWidget {
+  HomeView({Key key}) : super(key: key);
 
-  _SecondCalendarAppState createState() => _SecondCalendarAppState();
+  _HomeViewState createState() => _HomeViewState();
 }
 
-class _SecondCalendarAppState extends State<SecondCalendarApp>
-    with WidgetsBindingObserver {
+class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   final ScrollController scrollController = ScrollController();
   PageController _pageController;
   String page;
@@ -46,7 +46,6 @@ class _SecondCalendarAppState extends State<SecondCalendarApp>
     //     WidgetsBinding.instance.window.platformBrightness;
     //inform listeners and rebuild widget tree
   }
-
   @override
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
@@ -208,6 +207,7 @@ class _SecondCalendarAppState extends State<SecondCalendarApp>
     ];
     final dates = ["Vandaag", "Morgen", "Morgen", "Overmorgen", "Overmorgen"];
     return PageView.builder(
+      scrollDirection: Axis.horizontal,
       controller: PageController(viewportFraction: 0.8),
       itemCount: 5,
       itemBuilder: (BuildContext context, int itemIndex) {

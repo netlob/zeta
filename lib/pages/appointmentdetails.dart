@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 // import 'package:provider/provider.dart';
-import 'package:zeta/zermelo/appointment/appointment.dart';
+import 'package:zeta/zermelo/Appointment/Appointment.dart';
 //
 import 'package:zeta/utils/theme.dart';
 import 'package:zeta/utils/wave.dart';

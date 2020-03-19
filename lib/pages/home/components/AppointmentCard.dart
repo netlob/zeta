@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:zeta/zermelo/appointment/appointment.dart';
+import 'package:zeta/zermelo/Appointment/Appointment.dart';
 import 'package:zeta/pages/appointmentdetails.dart';
 import 'package:zeta/utils/theme.dart';
 
@@ -13,7 +13,9 @@ class AppointmentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: (_getTypeColor() != Colors.transparent
+              ? BorderRadius.horizontal(right: Radius.circular(15))
+              : BorderRadius.all(Radius.circular(15))),
           color: AppColors.themes[AppColors.theme]["appointmentBackground"],
           // border: Border(bottom: BorderSide(color: Colors.black12))
         ),
@@ -25,81 +27,98 @@ class AppointmentCard extends StatelessWidget {
             Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              AppointmentDetails(appointment: appointment)),
-                    );
-                  },
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 8, 0, 13),
-                    decoration: BoxDecoration(
-                      // color: Colors.white,
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(top: 5, left: 25),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                this.appointment.id.toString(),
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.themes[AppColors.theme]
-                                      ["appointmentTitle"],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "10:00 - 11.10",
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(226, 226, 226, 1)),
-                              )
-                            ],
-                          ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AppointmentDetails(appointment: appointment)),
+                      );
+                    },
+                    child: Stack(children: <Widget>[
+                      Container(
+                        alignment: Alignment.bottomCenter,
+                        height: 70,
+                        width: 5,
+                        decoration: BoxDecoration(
+                          color: _getTypeColor(),
+                          borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(30)),
                         ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Container(
-                                  padding: EdgeInsets.only(top: 15, right: 15),
-                                  child: Center(
-                                    child: Icon(Icons.assignment,
-                                        size: 20,
-                                        color:
-                                            Color.fromRGBO(119, 112, 252, 1)),
-                                  ))
-                            ]),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 8, 0, 13),
+                        child: Stack(
                           children: <Widget>[
                             Container(
-                                margin: EdgeInsets.only(top: 12),
-                                child: Center(
-                                    child: Text(
-                                  this.appointment.start.toString(),
-                                  style: TextStyle(
-                                      fontSize: 20,
+                              margin: EdgeInsets.only(top: 5, left: 25),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    this.appointment.id.toString(),
+                                    style: TextStyle(
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(119, 112, 252, 1)),
-                                )))
+                                      color: AppColors.themes[AppColors.theme]
+                                          ["appointmentTitle"],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "Lokaal 069 // 10:00 - 11.10",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color:
+                                            Color.fromRGBO(226, 226, 226, 1)),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Container(
+                                      padding:
+                                          EdgeInsets.only(top: 15, right: 15),
+                                      child: Center(
+                                        child: Icon(Icons.assignment,
+                                            size: 20,
+                                            color: Color.fromRGBO(
+                                                119, 112, 252, 1)),
+                                      ))
+                                ]),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                    margin: EdgeInsets.only(top: 12),
+                                    child: Center(
+                                        child: Text(
+                                      this.appointment.start.toString(),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Color.fromRGBO(119, 112, 252, 1)),
+                                    )))
+                              ],
+                            )
                           ],
-                        )
-                      ],
-                    ),
-                  ),
-                )));
+                        ),
+                      )
+                    ]))));
     // );
+  }
+
+  Color _getTypeColor() {
+    if (this.appointment.cancelled) return Color.fromRGBO(255, 100, 100, 1);
+    if (this.appointment.moved) return Colors.orange;
+    if (this.appointment.modified) return Colors.blue;
+    if (this.appointment.valid) return Colors.green;
+    return Colors.transparent;
   }
 }

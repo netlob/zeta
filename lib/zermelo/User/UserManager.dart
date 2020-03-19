@@ -1,9 +1,8 @@
-import 'package:zeta/zermelo/Manager.dart';
-import 'package:zeta/zermelo/Util.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import 'package:zeta/zermelo/User/User.dart';
+import 'package:zeta/zermelo/Manager.dart';
+import 'package:http/http.dart' as http;
+import 'package:zeta/zermelo/Util.dart';
+import 'dart:convert';
 
 class UserManager extends ZermeloManager {
   String school;

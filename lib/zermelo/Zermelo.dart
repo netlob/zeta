@@ -1,11 +1,10 @@
-import 'Appointment/AppointmentManager.dart';
-import 'User/UserManager.dart';
 import 'Announcement/AnnouncementManager.dart';
-import 'School/SchoolManager.dart';
-import 'Util.dart';
-
+import 'Appointment/AppointmentManager.dart';
 import 'package:http/http.dart' as http;
+import 'School/SchoolManager.dart';
+import 'User/UserManager.dart';
 import 'dart:convert';
+import 'Util.dart';
 
 class Zermelo {
   String school;
@@ -14,14 +13,6 @@ class Zermelo {
   UserManager users;
   AnnouncementsManager announcements;
   AppointmentManager appointments;
-
-  // String get school {
-  //   return _school;
-  // }
-
-  // String get accessToken {
-  //   return _accessToken;
-  // }
 
   static getAPI(String school, String accessToken) {
     return Zermelo(school, accessToken);
@@ -51,3 +42,5 @@ class Zermelo {
     this.appointments = AppointmentManager(school, accessToken);
   }
 }
+
+Zermelo zermelo;

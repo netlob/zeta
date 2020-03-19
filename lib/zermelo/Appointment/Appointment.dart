@@ -5,10 +5,10 @@ class Appointment {
   final int startTimeSlot;
   final int endTimeSlot;
 
-  final List<String> subjects;
-  final List<String> teachers;
-  final List<String> groups;
-  final List<String> locations;
+  final List<dynamic> subjects;
+  final List<dynamic> teachers;
+  final List<dynamic> groups;
+  final List<dynamic> locations;
 
   final String type;
   final String remark;

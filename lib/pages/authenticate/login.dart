@@ -10,14 +10,15 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
 
-  String school = "";
+  String school = "stijnvanderkolk";
   String code = "";
   String error = "";
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.themes[AppColors.theme]['backgroundAccent'],
+      // color: AppColors.themes[AppColors.theme]['backgroundAccent'],
+      color: Colors.transparent,
       child: Form(
           key: _formKey,
           child: Column(children: <Widget>[
@@ -30,18 +31,18 @@ class _LoginViewState extends State<LoginView> {
                           style: TextStyle(color: Colors.red, fontSize: 17))),
                   SizedBox(height: 20),
                   TextFormField(
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.blue,
                     style: TextStyle(
-                      color: Colors.white,
-                      decorationColor: Colors.white,
+                      color: Colors.blue,
+                      decorationColor: Colors.blue,
                       backgroundColor: Colors.transparent,
                     ),
                     decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        focusColor: Colors.white,
+                        fillColor: Colors.blue,
+                        focusColor: Colors.blue,
                         focusedBorder: const OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.white, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
@@ -49,30 +50,31 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         border: const OutlineInputBorder(),
                         labelText: 'School',
-                        labelStyle: TextStyle(color: Colors.white)),
-                    validator: (val) =>
-                        val.isEmpty ? "Vul een school in" : null,
+                        labelStyle: TextStyle(color: Colors.blue)),
+                    validator: (val) => val.isEmpty || val.indexOf(".") > 1
+                        ? "Vul een school in (zonder .zportal.nl)"
+                        : null,
                     onChanged: (val) => setState(() => school = val),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    obscureText: true,
-                    validator: (val) => val.length < 6
+                    obscureText: false,
+                    validator: (val) => val.length != 12
                         ? 'Vul een code in (zonder spaties)'
                         : null,
                     onChanged: (val) => setState(() => code = val),
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.blue,
                     style: TextStyle(
-                      color: Colors.white,
-                      decorationColor: Colors.white,
+                      color: AppColors.themes[AppColors.theme]["homeworkTitle"],
+                      decorationColor: Colors.blue,
                       backgroundColor: Colors.transparent,
                     ),
                     decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        focusColor: Colors.white,
+                        fillColor: Colors.blue,
+                        focusColor: Colors.blue,
                         focusedBorder: const OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.white, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
@@ -80,23 +82,21 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         border: const OutlineInputBorder(),
                         labelText: 'Koppel code',
-                        labelStyle: TextStyle(color: Colors.white)),
+                        labelStyle: TextStyle(color: Colors.blue)),
                   ),
                   SizedBox(height: 20),
                   Container(
                     width: MediaQuery.of(context).size.width - 60,
                     child: RaisedButton(
-                      color: Colors.white,
+                      color: Colors.blue,
                       padding: EdgeInsets.symmetric(vertical: 15),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           dynamic accessToken =
                               await Zermelo.getAccessToken(school, code);
                           print(accessToken.toString());
-                          final zermeloAPI =
-                              Zermelo.getAPI("stijnvanderkolk", accessToken);
-                          final userInfo =
-                              await zermeloAPI.users.get(id: "~me");
+                          zermelo = Zermelo.getAPI(school, accessToken);
+                          final userInfo = await zermelo.users.get(id: "~me");
                           print(userInfo.toString());
                           showDialog(
                               context: context,
@@ -124,7 +124,7 @@ class _LoginViewState extends State<LoginView> {
                         'Inloggen',
                         style: TextStyle(
                             fontSize: 18,
-                            color: Colors.black87,
+                            color: Colors.white,
                             fontWeight: FontWeight.w700),
                       ),
                     ),

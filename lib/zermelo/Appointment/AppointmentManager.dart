@@ -1,8 +1,8 @@
-import 'package:zeta/zermelo/Manager.dart';
-import 'package:zeta/zermelo/Util.dart';
 import 'package:zeta/zermelo/Appointment/Appointment.dart';
-import 'dart:convert';
+import 'package:zeta/zermelo/Manager.dart';
 import 'package:http/http.dart' as http;
+import 'package:zeta/zermelo/Util.dart';
+import 'dart:convert';
 
 class AppointmentManager extends ZermeloManager {
   String school;
@@ -11,15 +11,21 @@ class AppointmentManager extends ZermeloManager {
   get(DateTime startDate, DateTime endDate, {user = "~me"}) async {
     final response = await http.get(ZermeloUtil.createApiURL(
         this.school,
-        "appointments?user=$user&start=${startDate.millisecondsSinceEpoch / 1000}&end=${endDate.millisecondsSinceEpoch / 1000}",
+        "appointments?user=$user&start=${(startDate.millisecondsSinceEpoch / 1000).round()}&end=${(endDate.millisecondsSinceEpoch / 1000).round()}",
         this.accessToken));
     if (response.statusCode == 200) {
-      return json
-          .decode(response.body)
-          .map((appointment) => Appointment.fromJson(json.decode(appointment)))
+      print(json.decode(response.body)['response']['data']);
+      // return json
+      //     .decode(response.body)['response']['data']
+      //     .map((appointment) => Appointment.fromJson(json.decode(appointment)))
+      return (json.decode(response.body)['response']['data'] as List)
+          .map((e) => Appointment.fromJson(e))
           .toList()
+          // .toList()
           .sort((a, b) => a.start.compareTo(b.start));
     } else {
+      print(
+          "Server returned with an error ${response.statusCode} (${response.body})");
       throw Exception('Failed to load appointments');
     }
   }

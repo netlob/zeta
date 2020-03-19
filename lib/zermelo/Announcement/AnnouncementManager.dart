@@ -1,7 +1,7 @@
-import 'package:zeta/zermelo/Manager.dart';
-import 'package:zeta/zermelo/Util.dart';
 import 'package:zeta/zermelo/Announcement/Announcement.dart';
+import 'package:zeta/zermelo/Manager.dart';
 import 'package:http/http.dart' as http;
+import 'package:zeta/zermelo/Util.dart';
 import 'dart:convert';
 
 class AnnouncementsManager extends ZermeloManager {
