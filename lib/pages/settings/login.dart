@@ -57,8 +57,9 @@ class _LoginViewState extends State<LoginView> {
                   SizedBox(height: 20),
                   TextFormField(
                     obscureText: true,
-                    validator: (val) =>
-                        val.length < 6 ? 'Vul een wachtwoord in' : null,
+                    validator: (val) => val.length < 6
+                        ? 'Vul een code in (zonder spaties)'
+                        : null,
                     onChanged: (val) => setState(() => code = val),
                     cursorColor: Colors.white,
                     style: TextStyle(
@@ -89,14 +90,25 @@ class _LoginViewState extends State<LoginView> {
                       padding: EdgeInsets.symmetric(vertical: 15),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
-                          dynamic accessToken = await Zermelo.getAccessToken(
-                              "stijnvanderkolk", "537934396908");
+                          dynamic accessToken =
+                              await Zermelo.getAccessToken(school, code);
                           print(accessToken.toString());
                           final zermeloAPI =
                               Zermelo.getAPI("stijnvanderkolk", accessToken);
                           final userInfo =
                               await zermeloAPI.users.get(id: "~me");
                           print(userInfo.toString());
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15.0)),
+                                  title: Text("Inlog success"),
+                                  content: Text(userInfo.toString()),
+                                );
+                              });
 
                           // dynamic result = await _auth
                           //     .signInWithEmailAndPassword(

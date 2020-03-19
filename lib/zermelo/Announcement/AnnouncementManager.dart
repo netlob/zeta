@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AnnouncementsManager extends ZermeloManager {
+  String school;
+  String accessToken;
+
   get({user = "~me"}) async {
     final response = await http.get(ZermeloUtil.createApiURL(this.school,
         "announcements?user=$user&current=true", this.accessToken));
@@ -17,5 +20,10 @@ class AnnouncementsManager extends ZermeloManager {
     } else {
       throw Exception('Failed to load announcement');
     }
+  }
+
+  AnnouncementsManager(String school, String accesstoken) {
+    this.school = school;
+    this.accessToken = accesstoken;
   }
 }

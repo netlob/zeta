@@ -4,6 +4,9 @@ class ZermeloUtil {
   }
 
   static String createApiURL(String school, String slug, String accessToken) {
-    return "${getApiURL(school)}/$slug${RegExp(r'/\?/').hasMatch(slug) ? '&' : '?'}access_token=$accessToken";
+    print("$school$slug$accessToken");
+    String apiURL = getApiURL(school);
+    String a = slug.indexOf("?") > 1 ? "&" : "?";
+    return "$apiURL/$slug${a}access_token=$accessToken";
   }
 }

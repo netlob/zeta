@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SchoolManager extends ZermeloManager {
+  String school;
+  String accessToken;
+
   getAll() async {
     final response = await http.get(
         ZermeloUtil.createApiURL(this.school, "schools", this.accessToken));
@@ -26,5 +29,10 @@ class SchoolManager extends ZermeloManager {
     } else {
       throw Exception('Failed to load school');
     }
+  }
+
+  SchoolManager(String school, String accesstoken) {
+    this.school = school;
+    this.accessToken = accesstoken;
   }
 }

@@ -6,6 +6,9 @@ import 'dart:convert';
 import 'package:zeta/zermelo/User/User.dart';
 
 class UserManager extends ZermeloManager {
+  String school;
+  String accessToken;
+
   getAll() async {
     final response = await http
         .get(ZermeloUtil.createApiURL(this.school, "users", this.accessToken));
@@ -28,5 +31,10 @@ class UserManager extends ZermeloManager {
       print(response.body.toString());
       throw Exception('Failed to load user');
     }
+  }
+
+  UserManager(String school, String accesstoken) {
+    this.school = school;
+    this.accessToken = accesstoken;
   }
 }

@@ -5,6 +5,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AppointmentManager extends ZermeloManager {
+  String school;
+  String accessToken;
+
   get(DateTime startDate, DateTime endDate, {user = "~me"}) async {
     final response = await http.get(ZermeloUtil.createApiURL(
         this.school,
@@ -39,5 +42,10 @@ class AppointmentManager extends ZermeloManager {
       }
     } else
       throw Exception('Weeknumber must be between 1-52');
+  }
+
+  AppointmentManager(String school, String accesstoken) {
+    this.school = school;
+    this.accessToken = accesstoken;
   }
 }
