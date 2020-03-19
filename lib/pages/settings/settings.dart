@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:zeta/models/appointment.dart';
+import 'package:zeta/pages/settings/login.dart';
+// import 'package:zeta/models/appointment.dart';
 //
 import 'package:zeta/utils/theme.dart';
 import 'package:zeta/utils/wave.dart';
@@ -196,6 +197,7 @@ class _SettingsState extends State<Settings> with WidgetsBindingObserver {
                                         new BorderRadius.circular(18.0),
                                   ),
                                 ),
+                                LoginView()
                               ],
                             )),
                         // ])

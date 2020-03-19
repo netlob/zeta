@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
-import 'package:zeta/models/appointment.dart';
+// import 'package:provider/provider.dart';
+import 'package:zeta/zermelo/appointment/appointment.dart';
 //
 import 'package:zeta/utils/theme.dart';
 import 'package:zeta/utils/wave.dart';
@@ -92,6 +92,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                             child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Column(
                                       // mainAxisAlignment: MainAxisAlignment.end,
@@ -99,7 +100,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          widget.appointment.title,
+                                          widget.appointment.id.toString(),
                                           // "Vandaag",
                                           style: TextStyle(
                                               fontSize: 35,
@@ -112,7 +113,15 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.white))
                                       ]),
-                                  Text(widget.appointment.hour)
+                                  Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                        widget.appointment.start.toString(),
+                                        style: TextStyle(
+                                            fontSize: 50,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.white),
+                                      ))
                                   // Icon(Icons.arrow_drop_down, color: Colors.white)
                                 ])),
                         Container(
@@ -138,18 +147,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
 
   Widget _buildCarousel(BuildContext context) {
     final classes = [
-      widget.appointment.title,
-      widget.appointment.title,
-      widget.appointment.title,
-      widget.appointment.title,
-      widget.appointment.title,
+      widget.appointment.id.toString(),
+      widget.appointment.id.toString(),
+      widget.appointment.id.toString(),
+      widget.appointment.id.toString(),
+      widget.appointment.id.toString(),
     ];
     final tasks = [
-      widget.appointment.title + " huiswerk",
-      widget.appointment.title + " huiswerk",
-      widget.appointment.title + " huiswerk",
-      widget.appointment.title + " huiswerk",
-      widget.appointment.title + " huiswerk",
+      widget.appointment.id.toString() + " huiswerk",
+      widget.appointment.id.toString() + " huiswerk",
+      widget.appointment.id.toString() + " huiswerk",
+      widget.appointment.id.toString() + " huiswerk",
+      widget.appointment.id.toString() + " huiswerk",
     ];
     final dates = ["Vandaag", "Morgen", "Morgen", "Overmorgen", "Overmorgen"];
     return PageView.builder(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:zeta/models/appointment.dart';
-import 'package:zeta/pages/appointment.dart';
+import 'package:zeta/zermelo/appointment/appointment.dart';
+import 'package:zeta/pages/appointmentdetails.dart';
 import 'package:zeta/utils/theme.dart';
 
 class AppointmentCard extends StatelessWidget {
@@ -48,7 +48,7 @@ class AppointmentCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                this.appointment.title,
+                                this.appointment.id.toString(),
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -88,7 +88,7 @@ class AppointmentCard extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 12),
                                 child: Center(
                                     child: Text(
-                                  this.appointment.hour,
+                                  this.appointment.start.toString(),
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
