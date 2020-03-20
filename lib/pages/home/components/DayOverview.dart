@@ -106,17 +106,25 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
                 Container(
                     height: 520,
                     width: 350,
-                    child: SmartRefresher(
-                        enablePullDown: true,
-                        controller: _refreshController,
-                        onRefresh: _onRefresh,
-                        onLoading: _onLoading,
-                        child: ListView.builder(
-                            itemCount: appointments.length,
-                            itemBuilder: (BuildContext ctxt, int index) =>
-                                AppointmentCard(
-                                    appointment: appointments[index]))) //)
-                    )
+                    child: Stack(children: <Widget>[
+                      Visibility(
+                          child: Center(
+                              child: Text(
+                            "Aan het laden...",
+                            style: Theme.of(context).textTheme.title,
+                          )),
+                          visible: (appointments.length == 0)),
+                      SmartRefresher(
+                          enablePullDown: true,
+                          controller: _refreshController,
+                          onRefresh: _onRefresh,
+                          onLoading: _onLoading,
+                          child: ListView.builder(
+                              itemCount: appointments.length,
+                              itemBuilder: (BuildContext ctxt, int index) =>
+                                  AppointmentCard(
+                                      appointment: appointments[index])))
+                    ]))
               ]
                   //   )
                   // ])),

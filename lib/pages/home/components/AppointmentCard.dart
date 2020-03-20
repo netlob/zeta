@@ -119,7 +119,7 @@ class AppointmentCard extends StatelessWidget {
     if (this.appointment.cancelled) return Color.fromRGBO(255, 100, 100, 1);
     if (this.appointment.moved) return Colors.orange;
     if (this.appointment.modified) return Colors.blue;
-    if (this.appointment.valid) return Colors.green;
+    // if (this.appointment.valid) return Colors.green;
     return Colors.transparent;
   }
 }

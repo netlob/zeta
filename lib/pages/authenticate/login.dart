@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zeta/pages/home/home.dart';
-import 'package:zeta/utils/theme.dart';
 import 'package:zeta/zermelo/Zermelo.dart';
 
 class LoginView extends StatefulWidget {
@@ -96,45 +95,56 @@ class _LoginViewState extends State<LoginView> {
                                           backgroundColor: Colors.transparent,
                                           fontSize: 20)))
                             ])),
-                        Container(
-                            height: 100,
-                            child: TextFormField(
-                              obscureText: false,
-                              validator: (val) =>
-                                  val.length != 12 && val.length != 15
-                                      ? 'Vul een koppelcode in (zonder spaties)'
-                                      : null,
-                              onChanged: (val) => setState(() => code = val),
-                              cursorColor: Colors.white,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  decorationColor: Colors.white,
-                                  backgroundColor: Colors.transparent,
-                                  fontSize: 20),
-                              decoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.white60),
-                                  ),
-                                  fillColor: Colors.white,
-                                  focusColor: Colors.white,
-                                  labelText: 'Koppel code',
-                                  labelStyle: TextStyle(
-                                      color: Colors.white, fontSize: 20)),
-                            )),
-                        // SizedBox(height: 10),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "QR code scannen?",
-                              style: TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w200),
-                            ))
+                        Stack(overflow: Overflow.visible, children: <Widget>[
+                          Container(
+                              height: 100,
+                              child: TextFormField(
+                                obscureText: false,
+                                validator: (val) =>
+                                    val.length != 12 && val.length != 15
+                                        ? 'Vul een koppelcode in'
+                                        : null,
+                                onChanged: (val) => setState(() => code = val),
+                                cursorColor: Colors.white,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    decorationColor: Colors.white,
+                                    backgroundColor: Colors.transparent,
+                                    fontSize: 20),
+                                decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white60),
+                                    ),
+                                    fillColor: Colors.white,
+                                    focusColor: Colors.white,
+                                    labelText: 'Koppel code',
+                                    labelStyle: TextStyle(
+                                        color: Colors.white, fontSize: 20)),
+                              )),
+                          // SizedBox(height: 10),
+                          Positioned(
+                              top: 70,
+                              right: -15,
+                              child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: FlatButton(
+                                      onPressed: () {},
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      textColor: Colors.black,
+                                      child: Text(
+                                        "QR code scannen?",
+                                        style: TextStyle(
+                                            color: Colors.white54,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w200),
+                                      ))))
+                        ])
                       ])),
               Positioned(
                   left: 30,

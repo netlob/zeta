@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zeta/pages/authenticate/login.dart';
-import 'package:zeta/utils/theme.dart';
 
 class Authenticate extends StatefulWidget {
   @override

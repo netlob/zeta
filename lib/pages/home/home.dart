@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
-// import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeta/components/bottomnavbar.dart';
 import 'package:zeta/models/Day.dart';
 import 'package:zeta/utils/theme.dart';
@@ -219,13 +217,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       },
     );
   }
+}
 
-  int _dayOfYear(DateTime a) {
-    final diff = a.difference(DateTime(DateTime.now().year, 1, 1, 0, 0));
-    final diffInDays = diff.inDays;
-    if (a.day == 20) {
-      debugPrint(diffInDays.toString() + " " + a.toString());
-    }
-    return diffInDays;
+int _dayOfYear(DateTime a) {
+  final diff = a.difference(DateTime(DateTime.now().year, 1, 1, 0, 0));
+  final diffInDays = diff.inDays;
+  if (a.day == 20) {
+    debugPrint(diffInDays.toString() + " " + a.toString());
   }
+  return diffInDays.round();
 }

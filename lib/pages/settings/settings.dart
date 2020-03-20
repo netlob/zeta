@@ -1,5 +1,4 @@
 import 'package:zeta/pages/authenticate/authenticate.dart';
-import 'package:zeta/pages/authenticate/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:zeta/utils/theme.dart';
