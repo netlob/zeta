@@ -13,12 +13,23 @@ class _AuthenticateState extends State<Authenticate> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Zeta',
-        home: Container(
-            color: AppColors.themes[AppColors.theme]["backgroundAccent"],
-            child: SafeArea(
-                bottom: false,
-                child: Scaffold(
-                    body: Container(
-                        child: Column(children: <Widget>[LoginView()]))))));
+        theme: ThemeData(fontFamily: "Nunito"),
+        home: Stack(children: <Widget>[
+          Center(
+              child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage('assets/images/login_blue2.jpg'),
+              fit: BoxFit.cover,
+            )),
+          )),
+          Container(
+              child: SafeArea(
+                  bottom: true,
+                  child: Scaffold(
+                      backgroundColor: Colors.transparent, body: LoginView())))
+        ]));
   }
 }

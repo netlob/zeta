@@ -20,13 +20,13 @@ class Zermelo {
 
   static getAccessToken(String school, String authCode) async {
     final authURL = "${ZermeloUtil.getApiURL(school)}/oauth/token";
-    authCode = authCode.replaceAll(new RegExp(r'/\s/g'), '');
+    authCode = authCode.replaceAll(new RegExp(r"\s+\b|\b\s"), "");
     final response = await http
         .post("$authURL?grant_type=authorization_code&code=$authCode");
     if (response.statusCode == 200) {
       return json.decode(response.body)['access_token'];
     } else {
-      throw Exception(
+      return Exception(
           "Server returned with an error ${response.statusCode} (${response.body})");
     }
   }

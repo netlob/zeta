@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+// import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeta/components/bottomnavbar.dart';
 import 'package:zeta/models/Day.dart';
 import 'package:zeta/utils/theme.dart';
@@ -36,6 +36,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     date = date ?? "18 maart 2020";
     _pageController = PageController();
     WidgetsBinding.instance.addObserver(this);
+    fillDays();
   }
 
   @override
@@ -93,12 +94,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }
   @override
   Widget build(BuildContext context) {
-    ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
+    // ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Zeta',
-        theme: _themeChanger.getTheme(),
+        // theme: _themeChanger.getTheme(),
+        theme: ThemeData(fontFamily: "Nunito"),
         home: Container(
             color: AppColors.themes[AppColors.theme]["backgroundAccent"],
             child: SafeArea(

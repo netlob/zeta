@@ -1,16 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
+import 'package:zeta/pages/authenticate/authenticate.dart';
 import 'package:zeta/pages/authenticate/login.dart';
-// import 'package:zeta/models/appointment.dart';
-//
+import 'package:provider/provider.dart';
+import 'package:flutter/rendering.dart';
 import 'package:zeta/utils/theme.dart';
+import 'package:flutter/material.dart';
 import 'package:zeta/utils/wave.dart';
-
-import 'package:zeta/pages/home/components/HomeworkCard.dart';
-
-// import 'package:zeta/splash.dart';
-// import 'package:zeta/fadeonscroll.dart';
 
 class Settings extends StatefulWidget {
   Settings({Key key}) : super(key: key);
@@ -156,7 +150,7 @@ class _SettingsState extends State<Settings> with WidgetsBindingObserver {
                                   },
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
-                                          new BorderRadius.circular(18.0)))
+                                          BorderRadius.circular(18.0)))
                             ])),
                         Container(
                             margin: EdgeInsets.only(top: 250),
@@ -181,7 +175,28 @@ class _SettingsState extends State<Settings> with WidgetsBindingObserver {
                                   Text("deze status werkt niet lo",
                                       style: TextStyle(color: Colors.black54))
                                 ]),
-                                LoginView()
+                                Divider(),
+                                FlatButton.icon(
+                                  icon: Icon(Icons.exit_to_app,
+                                      color: Colors.white),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Authenticate(),
+                                          fullscreenDialog: true),
+                                    );
+                                  },
+                                  color: Colors.red[500],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(18.0)),
+                                  label: Text(
+                                    "Uitloggen",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  ),
+                                )
                               ],
                             )),
                         // ])

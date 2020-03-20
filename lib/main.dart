@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeta/pages/authenticate/authenticate.dart';
-import 'package:zeta/pages/home/home.dart';
+// import 'package:zeta/pages/home/home.dart';
 import 'package:zeta/utils/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeChanger>(
       create: (_) => ThemeChanger(),
-      // child: new Authenticate(),
-      child: new HomeView(),
+      child: new Authenticate(),
+      // child: new HomeView(),
     );
   }
 }
