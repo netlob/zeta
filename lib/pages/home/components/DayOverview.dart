@@ -1,3 +1,4 @@
+import 'package:zeta/models/Day.dart';
 import 'package:zeta/pages/home/components/AppointmentCard.dart';
 import 'package:zeta/zermelo/Appointment/Appointment.dart';
 import 'package:zeta/zermelo/Zermelo.dart';
@@ -7,66 +8,37 @@ import 'package:flutter/material.dart';
 import 'package:zeta/utils/theme.dart';
 
 class DayOverview extends StatefulWidget {
-  final String abr;
-  final String date;
-  final Color color;
-  DayOverview({Key key, this.abr, this.date, this.color}) : super(key: key);
+  final Day day;
+  DayOverview({Key key, this.day}) : super(key: key);
 
   _DayOverviewState createState() => _DayOverviewState();
 }
 
 class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
-  String abr;
-  String date;
-  Color color;
+  // Day day;
   BuildContext context;
 
-  // _DayOverviewState({this.abr, this.date, this.color, this.context});
+  // _DayOverviewState(this.day);
 
   Future<String> fetchCalendar() async {
     return "";
   }
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   final _refreshController = RefreshController(initialRefresh: false);
 
   List<Appointment> appointments = [];
-
-  // Appointment(
-  //     id: 976519,
-  //     start: 1,
-  //     end: 2,
-  //     startTimeSlot: 1,
-  //     endTimeSlot: 2,
-  //     subjects: ["yeet", "yaat"],
-  //     teachers: ["yeet", "yaat"],
-  //     groups: ["yeet", "yaat"],
-  //     locations: ["yeet", "yaat"],
-  //     type: "this.type",
-  //     remark: "this.remark",
-  //     valid: true,
-  //     cancelled: false,
-  //     modified: false,
-  //     moved: false,
-  //     isNew: true,
-  //     changeDescription: "this.changeDescription"),
-  // Appointment(
-  //     id: 976527,
-  //     start: 1,
-  //     end: 2,
-  //     startTimeSlot: 1,
-  //     endTimeSlot: 2,
-  //     subjects: ["yeet", "yaat"],
-  //     teachers: ["yeet", "yaat"],
-  //     groups: ["yeet", "yaat"],
-  //     locations: ["yeet", "yaat"],
-  //     type: "this.type",
-  //     remark: "this.remark",
-  //     valid: true,
-  //     cancelled: false,
-  //     modified: false,
-  //     moved: false,
-  //     isNew: true,
-  //     changeDescription: "this.changeDescription")
 
   void _onRefresh() async {
     if (zermelo == null) {
@@ -74,15 +46,15 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
           .showSnackBar(SnackBar(content: Text('Niet ingelogd :(')));
       _refreshController.refreshFailed();
     } else {
-      List<dynamic> list = await zermelo.appointments
-          .get(DateTime.utc(2020, 1, 1), DateTime.now());
+      List<dynamic> list = await zermelo.appointments.get(
+          DateTime.fromMicrosecondsSinceEpoch(widget.day.appointments[0].start),
+          DateTime.fromMicrosecondsSinceEpoch(
+              widget.day.appointments[widget.day.appointments.length - 1].end));
+
       debugPrint(list.toString());
       list.forEach((f) => {
-            // debugPrint(f.toString())
             setState(() => {this.appointments.add(f)})
           });
-
-      // setState(() => this.appointments.addAll(list));
       _refreshController.refreshCompleted();
     }
   }
@@ -94,6 +66,7 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext _context) {
+    setState(() => {this.appointments = widget.day.appointments});
     this.context = _context;
     return Container(
         margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -109,16 +82,17 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "MAA",
+                        _getDayAbr(),
                         style: TextStyle(
                             color: AppColors.themes[AppColors.theme]
                                 ["appointmentAbr"],
                             fontSize: 12),
                       ),
                       Text(
-                        "18",
+                        widget.day.date.add(Duration(days: 1)).day.toString(),
                         style: TextStyle(
-                            color: this.color,
+                            color: AppColors.themes[AppColors.theme]
+                                ["appointmentAbr"],
                             fontSize: 30,
                             fontWeight: FontWeight.bold),
                       )
@@ -148,5 +122,34 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
                   // ])),
                   ))
         ]));
+  }
+
+  String _getDayAbr() {
+    switch (widget.day.date.weekday) {
+      case 0:
+        return "MAA";
+        break;
+      case 1:
+        return "DIN";
+        break;
+      case 2:
+        return "WOE";
+        break;
+      case 3:
+        return "DON";
+        break;
+      case 4:
+        return "VRI";
+        break;
+      case 5:
+        return "SAT";
+        break;
+      case 6:
+        return "ZON";
+        break;
+      default:
+        return "?";
+        break;
+    }
   }
 }

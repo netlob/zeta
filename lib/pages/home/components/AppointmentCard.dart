@@ -69,7 +69,7 @@ class AppointmentCard extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    "Lokaal ${this.appointment.locations[0].toString()} // ${DateFormat('Hms').format(DateTime.fromMicrosecondsSinceEpoch(this.appointment.start))} - ${DateFormat('Hms').format(DateTime.fromMicrosecondsSinceEpoch(this.appointment.end))}",
+                                    "Lokaal ${this.appointment.locations[0].toString()} // ${DateFormat('Hm').format(DateTime.fromMillisecondsSinceEpoch(this.appointment.start * 1000))} - ${DateFormat('Hm').format(DateTime.fromMillisecondsSinceEpoch(this.appointment.end * 1000))}",
                                     style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,

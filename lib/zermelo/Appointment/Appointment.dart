@@ -1,4 +1,4 @@
-class Appointment {
+class Appointment implements Comparable {
   final int id;
   final int start;
   final int end;
@@ -60,5 +60,10 @@ class Appointment {
       isNew: json['isNew'],
       changeDescription: json['changeDescription'],
     );
+  }
+
+  @override
+  int compareTo(other) {
+    return start - other.start;
   }
 }

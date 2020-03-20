@@ -3,11 +3,14 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeta/components/bottomnavbar.dart';
+import 'package:zeta/models/Day.dart';
 import 'package:zeta/utils/theme.dart';
 import 'package:zeta/utils/wave.dart';
 
 import 'package:zeta/pages/home/components/DayOverview.dart';
 import 'package:zeta/pages/home/components/HomeworkCard.dart';
+import 'package:zeta/zermelo/Appointment/Appointment.dart';
+import 'package:zeta/zermelo/Zermelo.dart';
 
 // import 'package:zeta/splash.dart';
 // import 'package:zeta/fadeonscroll.dart';
@@ -24,6 +27,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   String page;
   String date;
 
+  List<Day> days = [];
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +43,46 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     _pageController.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  Future<void> fillDays() async {
+    setState(() => {days = []});
+    print("refreshing days");
+    if (zermelo == null) {
+      Scaffold.of(this.context)
+          .showSnackBar(SnackBar(content: Text('Niet ingelogd :(')));
+    } else {
+      List<dynamic> appointments = await zermelo.appointments
+          .get(DateTime.fromMillisecondsSinceEpoch(1584313200), DateTime.now());
+
+      List<Day> list = [];
+
+      for (Appointment f in appointments) {
+        int dayIndex = 0;
+        if (list.length != 0) {
+          final appDate =
+              _dayOfYear(DateTime.fromMillisecondsSinceEpoch(f.start * 1000));
+
+          dayIndex = list.indexWhere((d) => _dayOfYear(d.date) == appDate);
+
+          debugPrint(appDate.toString());
+        }
+        if (dayIndex < 1) {
+          Day day = Day(
+              appointments: [],
+              date: DateTime.fromMillisecondsSinceEpoch(f.start * 1000));
+          day.appointments.add(f);
+          list.add(day);
+        } else {
+          list[dayIndex].appointments.add(f);
+        }
+      }
+      for (Day d in days) {
+        d.appointments.sort((a, b) => a.compareTo(b));
+      }
+      setState(() => {days = list});
+      debugPrint("dayslength: " + days.length.toString());
+    }
   }
 
   @override
@@ -122,70 +167,22 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                               child: _buildCarousel(context)),
                           Container(
                               margin: EdgeInsets.only(top: 250),
-                              child: PageView(
-                                controller: _pageController,
-                                scrollDirection: Axis.horizontal,
-                                onPageChanged: (index) {
-                                  setState(() {
-                                    switch (index) {
-                                      case 0:
-                                        page = "Eergisteren";
-                                        date = "16 maart 2020";
-                                        break;
-                                      case 1:
-                                        page = "Gisteren";
-                                        date = "17 maart 2020";
-                                        break;
-                                      case 2:
-                                        page = "Vandaag";
-                                        date = "18 maart 2020";
-                                        break;
-                                      case 3:
-                                        page = "Morgen";
-                                        date = "19 maart 2020";
-                                        break;
-                                      default:
-                                        page = "Overmorgen";
-                                        date = "20 maart 2020";
-                                        break;
-                                    }
-                                  });
-                                },
-                                children: <Widget>[
-                                  DayOverview(
-                                      abr: "MAA",
-                                      date: "16",
-                                      color: AppColors.themes[AppColors.theme]
-                                          ["appointmentDate"]),
-                                  DayOverview(
-                                      abr: "DIN",
-                                      date: "17",
-                                      color: AppColors.themes[AppColors.theme]
-                                          ["appointmentDate"]),
-                                  DayOverview(
-                                      abr: "WOE",
-                                      date: "18",
-                                      color: Color.fromRGBO(123, 96, 247, 1)),
-                                  DayOverview(
-                                      abr: "DON",
-                                      date: "19",
-                                      color: AppColors.themes[AppColors.theme]
-                                          ["appointmentDate"]),
-                                  DayOverview(
-                                      abr: "VRIJ",
-                                      date: "20",
-                                      color: AppColors.themes[AppColors.theme]
-                                          ["appointmentDate"])
-                                ],
-                              ))
+                              child: PageView.builder(
+                                  controller: _pageController,
+                                  scrollDirection: Axis.horizontal,
+                                  onPageChanged: (index) {},
+                                  itemCount: days.length,
+                                  itemBuilder: (contxt, index) {
+                                    return DayOverview(day: days[index]);
+                                  }))
                           // ])
                         ])),
                     floatingActionButtonLocation:
                         FloatingActionButtonLocation.endFloat,
                     floatingActionButton: FloatingActionButton(
-                      child: const Icon(Icons.search),
+                      child: const Icon(Icons.refresh),
                       backgroundColor: Color.fromRGBO(252, 202, 46, 1),
-                      onPressed: () {},
+                      onPressed: fillDays,
                     ),
                     bottomNavigationBar: BottomNavBar()))));
   }
@@ -219,5 +216,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         );
       },
     );
+  }
+
+  int _dayOfYear(DateTime a) {
+    final diff = a.difference(DateTime(DateTime.now().year, 1, 1, 0, 0));
+    final diffInDays = diff.inDays;
+    if (a.day == 20) {
+      debugPrint(diffInDays.toString() + " " + a.toString());
+    }
+    return diffInDays;
   }
 }

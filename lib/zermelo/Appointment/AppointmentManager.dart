@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:zeta/zermelo/Appointment/Appointment.dart';
 import 'package:zeta/zermelo/Manager.dart';
 import 'package:http/http.dart' as http;
@@ -9,21 +10,24 @@ class AppointmentManager extends ZermeloManager {
   String accessToken;
 
   Future<List> get(DateTime startDate, DateTime endDate, {user = "~me"}) async {
+    debugPrint(
+        "appointments?user=$user&start=${(startDate.millisecondsSinceEpoch).round()}&end=${(endDate.millisecondsSinceEpoch).round()}");
     final response = await http.get(ZermeloUtil.createApiURL(
         this.school,
-        "appointments?user=$user&start=${(startDate.millisecondsSinceEpoch / 1000).round()}&end=${(endDate.millisecondsSinceEpoch / 1000).round()}",
+        "appointments?user=$user&start=1584313200&end=1584918000",
         this.accessToken));
     if (response.statusCode == 200) {
-      // print(json.decode(response.body)['response']['data']);
       return json
           .decode(response.body)['response']['data']
           .map((appointment) => Appointment.fromJson(appointment))
           .toList();
-      // .sort((a, b) => a['start'].compareTo(b['start']));
-      // return (json.decode(response.body)['response']['data'] as List)
-      //     .map((e) => Appointment.fromJson(e))
-      //     .toList()
-      //     .sort((a, b) => a.start.compareTo(b.start));
+      //     .sort((a, b) {
+      //   debugPrint(a.start.toString());
+      //   debugPrint(b.start.toString());
+      //   // var aDate = a.start; //DateTime.fromMicrosecondsSinceEpoch(a.start);
+      //   // var bDate = b.start; //DateTime.fromMicrosecondsSinceEpoch(b.start);
+      //   a.compareTo(b);
+      // });
     } else {
       print(
           "Server returned with an error ${response.statusCode} (${response.body})");

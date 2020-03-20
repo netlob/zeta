@@ -1,15 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-// import 'package:provider/provider.dart';
-import 'package:zeta/zermelo/Appointment/Appointment.dart';
-//
-import 'package:zeta/utils/theme.dart';
-import 'package:zeta/utils/wave.dart';
-
+import 'package:intl/intl.dart';
 import 'package:zeta/pages/home/components/HomeworkCard.dart';
-
-// import 'package:zeta/splash.dart';
-// import 'package:zeta/fadeonscroll.dart';
+import 'package:zeta/zermelo/Appointment/Appointment.dart';
+import 'package:flutter/rendering.dart';
+import 'package:zeta/utils/theme.dart';
+import 'package:flutter/material.dart';
+import 'package:zeta/utils/wave.dart';
 
 class AppointmentDetails extends StatefulWidget {
   final Appointment appointment;
@@ -100,14 +95,16 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          widget.appointment.id.toString(),
+                                          widget.appointment.subjects[0]
+                                              .toString(),
                                           // "Vandaag",
                                           style: TextStyle(
                                               fontSize: 35,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
                                         ),
-                                        Text("HH:MM - HH:MM",
+                                        Text(
+                                            "${DateFormat('Hm').format(DateTime.fromMillisecondsSinceEpoch(widget.appointment.start * 1000))} - ${DateFormat('Hm').format(DateTime.fromMillisecondsSinceEpoch(widget.appointment.end * 1000))}",
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -148,18 +145,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
 
   Widget _buildCarousel(BuildContext context) {
     final classes = [
-      widget.appointment.id.toString(),
-      widget.appointment.id.toString(),
-      widget.appointment.id.toString(),
-      widget.appointment.id.toString(),
-      widget.appointment.id.toString(),
+      widget.appointment.subjects[0].toString(),
+      widget.appointment.subjects[0].toString(),
+      widget.appointment.subjects[0].toString(),
+      widget.appointment.subjects[0].toString(),
+      widget.appointment.subjects[0].toString(),
     ];
     final tasks = [
-      widget.appointment.id.toString() + " huiswerk",
-      widget.appointment.id.toString() + " huiswerk",
-      widget.appointment.id.toString() + " huiswerk",
-      widget.appointment.id.toString() + " huiswerk",
-      widget.appointment.id.toString() + " huiswerk",
+      widget.appointment.subjects[0].toString() + " huiswerk",
+      widget.appointment.subjects[0].toString() + " huiswerk",
+      widget.appointment.subjects[0].toString() + " huiswerk",
+      widget.appointment.subjects[0].toString() + " huiswerk",
+      widget.appointment.subjects[0].toString() + " huiswerk",
     ];
     final dates = ["Vandaag", "Morgen", "Morgen", "Overmorgen", "Overmorgen"];
     return PageView.builder(
