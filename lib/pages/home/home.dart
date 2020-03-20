@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:zeta/components/bottomnavbar.dart';
 import 'package:zeta/models/Day.dart';
+import 'package:zeta/main.dart';
 import 'package:zeta/utils/theme.dart';
 import 'package:zeta/utils/wave.dart';
 
@@ -9,8 +12,6 @@ import 'package:zeta/pages/home/components/DayOverview.dart';
 import 'package:zeta/pages/home/components/HomeworkCard.dart';
 import 'package:zeta/zermelo/Appointment/Appointment.dart';
 import 'package:zeta/zermelo/Zermelo.dart';
-
-import 'package:hive/hive.dart';
 
 // import 'package:zeta/splash.dart';
 // import 'package:zeta/fadeonscroll.dart';
@@ -26,18 +27,44 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   final ScrollController scrollController = ScrollController();
   PageController _pageController;
-  String page;
-  String date;
+  String page = "this.page";
+  String date = "this.date";
 
   List<Day> days = [];
 
   @override
   void initState() {
     super.initState();
-    page = page ?? "Vandaag";
-    date = date ?? "18 maart 2020";
     _pageController = PageController();
     WidgetsBinding.instance.addObserver(this);
+    initZermelo();
+  }
+
+  initZermelo() async {
+    final accessToken = await box.get('accessToken');
+    final school = await box.get('school');
+
+    zermelo = Zermelo.getAPI(school, accessToken);
+    if (accessToken is Exception)
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Inlog faal :("),
+              content: Text(accessToken.toString()),
+            );
+          });
+
+    final userInfo = await zermelo.users.get(id: "~me");
+    if (userInfo is Exception)
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Inlog faal :("),
+              content: Text(userInfo.toString()),
+            );
+          });
     fillDays();
   }
 
@@ -150,14 +177,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        this.page.toString(),
+                                        this.page,
                                         // "Vandaag",
                                         style: TextStyle(
                                             fontSize: 35,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),
-                                      Text(this.date.toString(),
+                                      Text(this.date,
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
@@ -174,7 +201,18 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                               child: PageView.builder(
                                   controller: _pageController,
                                   scrollDirection: Axis.horizontal,
-                                  onPageChanged: (index) {},
+                                  onPageChanged: (index) {
+                                    setState(() {
+                                      this.page = DateFormat('EEEEE')
+                                          .format(days[index].date)
+                                          .toString();
+                                      this.date = DateFormat('dd/MM')
+                                          .format(days[index]
+                                              .date
+                                              .add(Duration(days: 1)))
+                                          .toString();
+                                    });
+                                  },
                                   itemCount: days.length,
                                   itemBuilder: (contxt, index) {
                                     return DayOverview(day: days[index]);

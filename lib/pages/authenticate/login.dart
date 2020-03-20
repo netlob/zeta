@@ -165,13 +165,11 @@ class _LoginViewState extends State<LoginView> {
                             if (_formKey.currentState.validate()) {
                               dynamic accessToken =
                                   await Zermelo.getAccessToken(school, code);
-                              box.put('accessToken', accessToken);
                               if (accessToken is Exception) {
                                 setState(() => error = accessToken.toString());
                                 return;
                               }
-                              final token = await box.get('accessToken');
-                              zermelo = Zermelo.getAPI(school, token);
+                              zermelo = Zermelo.getAPI(school, accessToken);
                               if (accessToken is Exception)
                                 setState(() => error = accessToken.toString());
                               final userInfo =
@@ -180,6 +178,8 @@ class _LoginViewState extends State<LoginView> {
                                 setState(() => error = userInfo.toString());
                                 return;
                               }
+                              box.put('accessToken', accessToken);
+                              box.put('school', school);
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
