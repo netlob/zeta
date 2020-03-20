@@ -12,10 +12,14 @@ import 'package:zeta/pages/home/components/HomeworkCard.dart';
 import 'package:zeta/zermelo/Appointment/Appointment.dart';
 import 'package:zeta/zermelo/Zermelo.dart';
 
+import 'package:hive/hive.dart';
+
 // import 'package:zeta/splash.dart';
 // import 'package:zeta/fadeonscroll.dart';
 
 class HomeView extends StatefulWidget {
+  final box = Hive.openBox('zetaBox');
+
   HomeView({Key key}) : super(key: key);
 
   _HomeViewState createState() => _HomeViewState();

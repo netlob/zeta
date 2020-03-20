@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zeta/pages/home/home.dart';
 import 'package:zeta/utils/theme.dart';
 import 'package:zeta/zermelo/Zermelo.dart';
+import 'package:hive/hive.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -10,8 +11,9 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
+  final box = Hive.box('zetaBox');
 
-  String school = "stijnvanderkolk";
+  String school = "";
   String code = "";
   String error = "";
 
@@ -153,11 +155,13 @@ class _LoginViewState extends State<LoginView> {
                             if (_formKey.currentState.validate()) {
                               dynamic accessToken =
                                   await Zermelo.getAccessToken(school, code);
+                              box.put('accessToken', accessToken);
                               if (accessToken is Exception) {
                                 setState(() => error = accessToken.toString());
                                 return;
                               }
-                              zermelo = Zermelo.getAPI(school, accessToken);
+                              final token = await box.get('accessToken');
+                              zermelo = Zermelo.getAPI(school, token);
                               if (accessToken is Exception)
                                 setState(() => error = accessToken.toString());
                               final userInfo =
