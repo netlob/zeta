@@ -94,10 +94,10 @@ class _LoginViewState extends State<LoginView> {
                         if (_formKey.currentState.validate()) {
                           dynamic accessToken =
                               await Zermelo.getAccessToken(school, code);
-                          print(accessToken.toString());
+                          // print(accessToken.toString());
                           zermelo = Zermelo.getAPI(school, accessToken);
                           final userInfo = await zermelo.users.get(id: "~me");
-                          print(userInfo.toString());
+                          // print(userInfo.toString());
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {

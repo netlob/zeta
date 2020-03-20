@@ -8,21 +8,22 @@ class AppointmentManager extends ZermeloManager {
   String school;
   String accessToken;
 
-  get(DateTime startDate, DateTime endDate, {user = "~me"}) async {
+  Future<List> get(DateTime startDate, DateTime endDate, {user = "~me"}) async {
     final response = await http.get(ZermeloUtil.createApiURL(
         this.school,
         "appointments?user=$user&start=${(startDate.millisecondsSinceEpoch / 1000).round()}&end=${(endDate.millisecondsSinceEpoch / 1000).round()}",
         this.accessToken));
     if (response.statusCode == 200) {
-      print(json.decode(response.body)['response']['data']);
-      // return json
-      //     .decode(response.body)['response']['data']
-      //     .map((appointment) => Appointment.fromJson(json.decode(appointment)))
-      return (json.decode(response.body)['response']['data'] as List)
-          .map((e) => Appointment.fromJson(e))
-          .toList()
-          // .toList()
-          .sort((a, b) => a.start.compareTo(b.start));
+      // print(json.decode(response.body)['response']['data']);
+      return json
+          .decode(response.body)['response']['data']
+          .map((appointment) => Appointment.fromJson(appointment))
+          .toList();
+      // .sort((a, b) => a['start'].compareTo(b['start']));
+      // return (json.decode(response.body)['response']['data'] as List)
+      //     .map((e) => Appointment.fromJson(e))
+      //     .toList()
+      //     .sort((a, b) => a.start.compareTo(b.start));
     } else {
       print(
           "Server returned with an error ${response.statusCode} (${response.body})");

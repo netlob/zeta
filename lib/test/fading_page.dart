@@ -22,7 +22,7 @@ class _FadingPageState extends State<FadingPage> {
   }
 
   bool get _showTitle {
-    print(kToolbarHeight * 2);
+    // print(kToolbarHeight * 2);
 
     return _scrollController.hasClients &&
         _scrollController.offset > kExpandedHeight - (kToolbarHeight * 3);

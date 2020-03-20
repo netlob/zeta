@@ -21,7 +21,6 @@ class Zermelo {
   static getAccessToken(String school, String authCode) async {
     final authURL = "${ZermeloUtil.getApiURL(school)}/oauth/token";
     authCode = authCode.replaceAll(new RegExp(r'/\s/g'), '');
-    print("$authURL?grant_type=authorization_code&code=$authCode");
     final response = await http
         .post("$authURL?grant_type=authorization_code&code=$authCode");
     if (response.statusCode == 200) {

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:zeta/zermelo/Appointment/Appointment.dart';
 import 'package:zeta/pages/appointmentdetails.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 import 'package:zeta/utils/theme.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentCard extends StatelessWidget {
   final Appointment appointment;
@@ -56,7 +57,7 @@ class AppointmentCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    this.appointment.id.toString(),
+                                    this.appointment.subjects[0].toString(),
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -68,7 +69,7 @@ class AppointmentCard extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    "Lokaal 069 // 10:00 - 11.10",
+                                    "Lokaal ${this.appointment.locations[0].toString()} // ${DateFormat('Hms').format(DateTime.fromMicrosecondsSinceEpoch(this.appointment.start))} - ${DateFormat('Hms').format(DateTime.fromMicrosecondsSinceEpoch(this.appointment.end))}",
                                     style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,
@@ -98,7 +99,7 @@ class AppointmentCard extends StatelessWidget {
                                     margin: EdgeInsets.only(top: 12),
                                     child: Center(
                                         child: Text(
-                                      this.appointment.start.toString(),
+                                      this.appointment.startTimeSlot.toString(),
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,

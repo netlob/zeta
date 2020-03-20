@@ -116,7 +116,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails>
                                   Container(
                                       margin: EdgeInsets.only(right: 10),
                                       child: Text(
-                                        widget.appointment.start.toString(),
+                                        widget.appointment.startTimeSlot
+                                            .toString(),
                                         style: TextStyle(
                                             fontSize: 50,
                                             fontWeight: FontWeight.w800,
