@@ -89,7 +89,7 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
                             fontSize: 12),
                       ),
                       Text(
-                        widget.day.date.add(Duration(days: 1)).day.toString(),
+                        widget.day.date.add(Duration(hours: 0)).day.toString(),
                         style: TextStyle(
                             color: AppColors.themes[AppColors.theme]
                                 ["appointmentAbr"],
@@ -133,7 +133,7 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
   }
 
   String _getDayAbr() {
-    switch (widget.day.date.weekday) {
+    switch (widget.day.date.weekday - 1) {
       case 0:
         return "MAA";
         break;

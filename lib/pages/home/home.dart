@@ -82,8 +82,9 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       Scaffold.of(this.context)
           .showSnackBar(SnackBar(content: Text('Niet ingelogd :(')));
     } else {
-      List<dynamic> appointments = await zermelo.appointments
-          .get(DateTime.fromMillisecondsSinceEpoch(1584313200), DateTime.now());
+      List<dynamic> appointments = await zermelo.appointments.get(
+          DateTime.fromMillisecondsSinceEpoch(1584313200),
+          DateTime.now().add(Duration(hours: 1)));
 
       List<Day> list = [];
 
@@ -176,15 +177,19 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
+                                      Expanded(
+                                          flex: 1,
+                                          child: SingleChildScrollView(
+                                              child: Text(
+                                            this.page,
+                                            // "Vandaag",
+                                            style: TextStyle(
+                                                fontSize: 35,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ))),
                                       Text(
-                                        this.page,
-                                        // "Vandaag",
-                                        style: TextStyle(
-                                            fontSize: 35,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                      Text(this.date,
+                                          "${date[0].toUpperCase()}${date.substring(1)}",
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
@@ -203,14 +208,20 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                                   scrollDirection: Axis.horizontal,
                                   onPageChanged: (index) {
                                     setState(() {
-                                      this.page = DateFormat('EEEEE')
-                                          .format(days[index].date)
-                                          .toString();
-                                      this.date = DateFormat('dd/MM')
-                                          .format(days[index]
-                                              .date
-                                              .add(Duration(days: 1)))
-                                          .toString();
+                                      // this.page = DateFormat('EEEEE', "nl_NL")
+                                      //     .format(days[index]
+                                      //         .date
+                                      //         .add(Duration(days: 1)))
+                                      //     .toString();
+                                      this.page = _getDayReference(days[index]
+                                          .date
+                                          .add(Duration(hours: 1)));
+                                      this.date =
+                                          DateFormat('EEEEE dd MMMM', "nl_NL")
+                                              .format(days[index]
+                                                  .date
+                                                  .add(Duration(hours: 1)))
+                                              .toString();
                                     });
                                   },
                                   itemCount: days.length,
@@ -259,10 +270,33 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       },
     );
   }
+
+  String _getDayReference(DateTime date) {
+    final diff =
+        date.difference(DateTime.now().add(Duration(hours: 1))).inDays - 1;
+    if (diff == -2) {
+      return "Eergisteren";
+    } else if (diff == -1) {
+      return "Gisteren";
+    } else if (diff == 0) {
+      return "Vandaag";
+    } else if (diff == 1) {
+      return "Morgen";
+    } else if (diff == 2) {
+      return "Overmorgen";
+    } else if (diff > 2) {
+      return "Over${"over" * (diff - 1)}morgen";
+    } else if (diff < 2) {
+      return "Eer${"eer" * ((diff * -1) + 1)}gisteren";
+    } else {
+      return diff.toString();
+    }
+  }
 }
 
 int _dayOfYear(DateTime a) {
-  final diff = a.difference(DateTime(DateTime.now().year, 1, 1, 0, 0));
+  final diff = a.difference(
+      DateTime(DateTime.now().add(Duration(hours: 1)).year, 1, 1, 0, 0));
   final diffInDays = diff.inDays;
   if (a.day == 20) {
     debugPrint(diffInDays.toString() + " " + a.toString());

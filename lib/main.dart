@@ -1,3 +1,4 @@
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:zeta/pages/authenticate/authenticate.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:zeta/pages/home/home.dart';
@@ -14,6 +15,7 @@ void main() async {
   box = await Hive.openBox('zetaBox');
   String accessToken = await box.get('accessToken');
   runApp(ZetaApp(accessToken is String && accessToken.length > 2));
+  initializeDateFormatting("nl_NL", null).then((_) {});
 }
 
 class ZetaApp extends StatelessWidget {
