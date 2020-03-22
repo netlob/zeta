@@ -5,6 +5,8 @@ import 'package:zeta/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:zeta/utils/wave.dart';
 
+import 'package:hive/hive.dart';
+
 class Settings extends StatefulWidget {
   Settings({Key key}) : super(key: key);
 
@@ -12,6 +14,8 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> with WidgetsBindingObserver {
+  final box = Hive.box('zetaBox');
+
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -179,6 +183,8 @@ class _SettingsState extends State<Settings> with WidgetsBindingObserver {
                                   icon: Icon(Icons.exit_to_app,
                                       color: Colors.white),
                                   onPressed: () {
+                                    box.put('accessToken','');
+                                    box.put('school', '');
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

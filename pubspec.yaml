@@ -1,5 +1,5 @@
 name: zeta
-description: A new Flutter project.
+description: A modern, cross-platform Zermelo app with some extra features, like notifications on a schedule-change. Built with Flutter.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43

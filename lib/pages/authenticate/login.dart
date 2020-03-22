@@ -43,10 +43,6 @@ class _LoginViewState extends State<LoginView> {
                                     fontSize: 50,
                                     fontWeight: FontWeight.w800,
                                     height: 1.2))),
-                        Container(
-                            child: Text(error,
-                                style: TextStyle(
-                                    color: Colors.red, fontSize: 17))),
                         // SizedBox(height: 20),
                         Container(
                             height: 100,
@@ -166,42 +162,123 @@ class _LoginViewState extends State<LoginView> {
                               dynamic accessToken =
                                   await Zermelo.getAccessToken(school, code);
                               if (accessToken is Exception) {
-                                setState(() => error = accessToken.toString());
-                                return;
-                              }
-                              zermelo = Zermelo.getAPI(school, accessToken);
-                              if (accessToken is Exception)
-                                setState(() => error = accessToken.toString());
-                              final userInfo =
-                                  await zermelo.users.get(id: "~me");
-                              if (userInfo is Exception) {
-                                setState(() => error = userInfo.toString());
-                                return;
-                              }
-                              box.put('accessToken', accessToken);
-                              box.put('school', school);
-                              showDialog(
+                                if (accessToken.toString().contains('404')) {
+                                showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text("Inlog success"),
-                                      content: Text(userInfo.toString()),
+                                      title: Text("Oeps!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        )),
+                                      content: Text('De school is niet geldig. Typefout?'),
                                       actions: <Widget>[
                                         FlatButton(
                                           child: Text("Doorgaan"),
                                           onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomeView(),
-                                                  fullscreenDialog: true),
-                                            );
+                                            Navigator.pop(context);
                                           },
                                         )
                                       ],
                                     );
                                   });
+                                  return;
+                                } else if (accessToken.toString().contains('400')) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Oeps!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        )),
+                                      content: Text('De koppelcode is niet geldig.'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text("Doorgaan"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });                                  return;
+                                } else {
+                                  showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Oeps!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        )),
+                                      content: Text('Er is iets mis gegaan..'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text("Doorgaan"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });           
+                                  return;
+                                }
+                              }
+                              zermelo = Zermelo.getAPI(school, accessToken);
+                              if (accessToken is Exception)
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Oeps!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        )),
+                                      content: Text('Er is iets mis gegaan..'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text("Doorgaan"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });
+                              final userInfo =
+                                  await zermelo.users.get(id: "~me");
+                              if (userInfo is Exception) {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Oeps!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        )),
+                                      content: Text('Er is iets mis gegaan..'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text("Doorgaan"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });
+                                return;
+                              }
+                              box.put('accessToken', accessToken);
+                              box.put('school', school);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                    HomeView(),
+                                  fullscreenDialog: true));
                             }
                           },
                           child: Text(
