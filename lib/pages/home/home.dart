@@ -88,15 +88,44 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
       List<Day> list = [];
 
-      for (Appointment f in appointments) {
+      // for (Appointment f in appointments) {
+      for (var i = 0; i < appointments.length; i++) {
+        final f = appointments[i];
+        // int dayIndex = 0;
+        // if (list.length != 0) {
+        //   final appDate =
+        //       _dayOfYear(DateTime.fromMillisecondsSinceEpoch(f.start * 1000));
+
+        //   dayIndex = list.indexWhere((d) => _dayOfYear(d.date) == appDate);
+
+        //   debugPrint(appDate.toString());
+        // }
+        // if (dayIndex < 1) {
+        //   Day day = Day(
+        //       appointments: [],
+        //       date: DateTime.fromMillisecondsSinceEpoch(f.start * 1000));
+        //   day.appointments.add(f);
+        //   list.add(day);
+        // } else {
+        //   list[dayIndex].appointments.add(f);
+        // }
         int dayIndex = 0;
         if (list.length != 0) {
-          final appDate =
-              _dayOfYear(DateTime.fromMillisecondsSinceEpoch(f.start * 1000));
-
-          dayIndex = list.indexWhere((d) => _dayOfYear(d.date) == appDate);
-
-          debugPrint(appDate.toString());
+          final appDate = DateTime.fromMillisecondsSinceEpoch(f.start * 1000)
+                  .day
+                  .toString() +
+              "/" +
+              DateTime.fromMillisecondsSinceEpoch(f.start * 1000)
+                  .month
+                  .toString();
+          dayIndex = list.indexWhere((d) =>
+              ((d.date.day.toString() + "/" + d.date.month.toString()) ==
+                  (appDate)));
+          list.forEach((d) => debugPrint(
+              (d.date.day.toString() + "/" + d.date.month.toString()) +
+                  "  " +
+                  (appDate)));
+          debugPrint("day" + appDate + "yeet" + dayIndex.toString());
         }
         if (dayIndex < 1) {
           Day day = Day(
@@ -108,10 +137,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           list[dayIndex].appointments.add(f);
         }
       }
+      setState(() => {days = list});
       for (Day d in days) {
         d.appointments.sort((a, b) => a.compareTo(b));
+        debugPrint("d:" +
+            d.appointments.length.toString() +
+            " yeet " +
+            (d.date.day.toString() + "/" + d.date.month.toString()));
       }
-      setState(() => {days = list});
       debugPrint("dayslength: " + days.length.toString());
     }
   }
@@ -177,17 +210,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Expanded(
-                                          flex: 1,
-                                          child: SingleChildScrollView(
-                                              child: Text(
-                                            this.page,
-                                            // "Vandaag",
-                                            style: TextStyle(
-                                                fontSize: 35,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ))),
+                                      Text(
+                                        this.page,
+                                        // "Vandaag",
+                                        style: TextStyle(
+                                            fontSize: 35,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
                                       Text(
                                           "${date[0].toUpperCase()}${date.substring(1)}",
                                           style: TextStyle(
@@ -285,11 +315,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     } else if (diff == 2) {
       return "Overmorgen";
     } else if (diff > 2) {
-      return "Over${"over" * (diff - 1)}morgen";
+      // return "Over${"over" * (diff - 1)}morgen";
+      return "Vandaag";
     } else if (diff < 2) {
-      return "Eer${"eer" * ((diff * -1) + 1)}gisteren";
+      // return "Eer${"eer" * ((diff * -1) + 1)}gisteren";
+      return "Vandaag";
     } else {
-      return diff.toString();
+      return "Vandaag";
     }
   }
 }
