@@ -13,8 +13,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('zetaBox');
   box = await Hive.openBox('zetaBox');
-  String accessToken = await box.get('accessToken');
-  runApp(ZetaApp(accessToken is String && accessToken.length > 2));
+  runApp(ZetaApp(await box.get('accessToken') is String && await box.get('accessToken').length > 2));
   initializeDateFormatting("nl_NL", null).then((_) {});
 }
 
