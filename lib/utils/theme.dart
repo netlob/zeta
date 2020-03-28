@@ -44,7 +44,8 @@ class AppColors {
   static final themes = {
     "light": {
       "background": Color.fromRGBO(243, 244, 249, 1),
-      "backgroundAccent": Color.fromRGBO(90, 109, 246, 1),
+      "backgroundAccent":
+          Color.fromRGBO(99, 145, 255, 1), //Color.fromRGBO(90, 109, 246, 1),
       "homeworkBackground": Colors.white,
       "homeworkTitle": Color.fromRGBO(90, 89, 103, 1),
       "homeworkButton": Color.fromRGBO(243, 242, 248, 1),

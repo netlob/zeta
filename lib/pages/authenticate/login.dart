@@ -19,6 +19,9 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        // height: double.infinity,
+        // child: SingleChildScrollView(
+        //     child: Container(
         child: Form(
             key: _formKey,
             child: Stack(children: <Widget>[
@@ -213,6 +216,6 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         ),
                       )))
-            ])));
+            ]))); //));
   }
 }

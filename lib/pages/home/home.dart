@@ -10,11 +10,7 @@ import 'package:zeta/utils/wave.dart';
 
 import 'package:zeta/pages/home/components/DayOverview.dart';
 import 'package:zeta/pages/home/components/HomeworkCard.dart';
-import 'package:zeta/zermelo/Appointment/Appointment.dart';
 import 'package:zeta/zermelo/Zermelo.dart';
-
-// import 'package:zeta/splash.dart';
-// import 'package:zeta/fadeonscroll.dart';
 
 class HomeView extends StatefulWidget {
   final box = Hive.openBox('zetaBox');
@@ -27,15 +23,15 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   final ScrollController scrollController = ScrollController();
   PageController _pageController;
-  String page = "this.page";
-  String date = "this.date";
+  String page = "php";
+  String date = "is gay";
 
   List<Day> days = [];
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _pageController = PageController(); //viewportFraction: 1 / 3);
     WidgetsBinding.instance.addObserver(this);
     initZermelo();
   }
@@ -168,106 +164,111 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             color: AppColors.themes[AppColors.theme]["backgroundAccent"],
             child: SafeArea(
                 bottom: false,
-                child: Scaffold(
-                    body: Container(
-                        color: AppColors.themes[AppColors.theme]["background"],
-                        child:
-                            // Column(children: [
-                            Stack(children: <Widget>[
-                          // Stack(children: <Widget>[
-                          ClipPath(
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.themes[AppColors.theme]
-                                        ["backgroundAccent"]),
-                                height: 210),
-                            clipper: BottomWaveLeft(),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.calendar_today,
-                                      color: Colors.transparent,
-                                    ),
-                                    onPressed: () {}),
-                                IconButton(
-                                    icon:
-                                        Icon(Icons.search, color: Colors.white),
-                                    onPressed: () {}),
-                              ],
+                child: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  return Scaffold(
+                      body: Container(
+                          color: AppColors.themes[AppColors.theme]
+                              ["background"],
+                          child:
+                              // Column(children: [
+                              Stack(children: <Widget>[
+                            // Stack(children: <Widget>[
+                            ClipPath(
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: AppColors.themes[AppColors.theme]
+                                          ["backgroundAccent"]),
+                                  height: 210),
+                              clipper: BottomWaveLeft(),
                             ),
-                          ),
-                          Container(
-                              margin:
-                                  EdgeInsets.fromLTRB(35, 20, 20, 10), // T: 130
-                              child: Row(children: <Widget>[
-                                Column(
-                                    // mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        this.page,
-                                        // "Vandaag",
-                                        style: TextStyle(
-                                            fontSize: 35,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  IconButton(
+                                      icon: Icon(
+                                        Icons.calendar_today,
+                                        color: Colors.transparent,
                                       ),
-                                      Text(
-                                          "${date[0].toUpperCase()}${date.substring(1)}",
+                                      onPressed: () {}),
+                                  IconButton(
+                                      icon: Icon(Icons.search,
+                                          color: Colors.white),
+                                      onPressed: () {}),
+                                ],
+                              ),
+                            ),
+                            Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    35, 20, 20, 10), // T: 130
+                                child: Row(children: <Widget>[
+                                  Column(
+                                      // mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          this.page,
+                                          // "Vandaag",
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 35,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.white))
-                                    ]),
-                                // Icon(Icons.arrow_drop_down, color: Colors.white)
-                              ])),
-                          Container(
-                              margin: EdgeInsets.only(top: 60),
-                              height: 280,
-                              child: _buildCarousel(context)),
-                          Container(
-                              margin: EdgeInsets.only(top: 250),
-                              child: PageView.builder(
-                                  controller: _pageController,
-                                  scrollDirection: Axis.horizontal,
-                                  onPageChanged: (index) {
-                                    setState(() {
-                                      // this.page = DateFormat('EEEEE', "nl_NL")
-                                      //     .format(days[index]
-                                      //         .date
-                                      //         .add(Duration(days: 1)))
-                                      //     .toString();
-                                      this.page = _getDayReference(days[index]
-                                          .date
-                                          .add(Duration(hours: 1)));
-                                      this.date =
-                                          DateFormat('EEEEE dd MMMM', "nl_NL")
-                                              .format(days[index]
-                                                  .date
-                                                  .add(Duration(hours: 1)))
-                                              .toString();
-                                    });
-                                  },
-                                  itemCount: days.length,
-                                  itemBuilder: (contxt, index) {
-                                    return DayOverview(day: days[index]);
-                                  }))
-                          // ])
-                        ])),
-                    floatingActionButtonLocation:
-                        FloatingActionButtonLocation.endFloat,
-                    floatingActionButton: FloatingActionButton(
-                      child: const Icon(Icons.refresh),
-                      backgroundColor: Color.fromRGBO(252, 202, 46, 1),
-                      onPressed: fillDays,
-                    ),
-                    bottomNavigationBar: BottomNavBar()))));
+                                              color: Colors.white),
+                                        ),
+                                        Text(
+                                            "${date[0].toUpperCase()}${date.substring(1)}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white))
+                                      ]),
+                                  // Icon(Icons.arrow_drop_down, color: Colors.white)
+                                ])),
+                            Container(
+                                margin: EdgeInsets.only(top: 60),
+                                height: 280,
+                                child: _buildCarousel(context)),
+                            Container(
+                                margin: EdgeInsets.only(top: 250),
+                                child: PageView.builder(
+                                    controller: _pageController,
+                                    scrollDirection: Axis.horizontal,
+                                    onPageChanged: (index) {
+                                      setState(() {
+                                        // this.page = DateFormat('EEEEE', "nl_NL")
+                                        //     .format(days[index]
+                                        //         .date
+                                        //         .add(Duration(days: 1)))
+                                        //     .toString();
+                                        this.page = _getDayReference(days[index]
+                                            .date
+                                            .add(Duration(hours: 1)));
+                                        this.date =
+                                            DateFormat('EEEEE dd MMMM', "nl_NL")
+                                                .format(days[index]
+                                                    .date
+                                                    .add(Duration(hours: 1)))
+                                                .toString();
+                                      });
+                                    },
+                                    itemCount: days.length,
+                                    itemBuilder: (contxt, index) {
+                                      return DayOverview(day: days[index]);
+                                    }))
+                            // ])
+                          ])),
+                      floatingActionButtonLocation:
+                          FloatingActionButtonLocation.endFloat,
+                      floatingActionButton: FloatingActionButton(
+                        child: const Icon(Icons.refresh),
+                        backgroundColor: Color.fromRGBO(252, 202, 46, 1),
+                        onPressed: fillDays,
+                      ),
+                      bottomNavigationBar: BottomNavBar());
+                }))));
   }
 
   Widget _buildCarousel(BuildContext context) {
@@ -315,23 +316,21 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     } else if (diff == 2) {
       return "Overmorgen";
     } else if (diff > 2) {
-      // return "Over${"over" * (diff - 1)}morgen";
-      return "Vandaag";
+      return "Over^${diff}morgen";
     } else if (diff < 2) {
-      // return "Eer${"eer" * ((diff * -1) + 1)}gisteren";
-      return "Vandaag";
+      return "Eer^${diff * -1}gisteren";
     } else {
       return "Vandaag";
     }
   }
 }
 
-int _dayOfYear(DateTime a) {
-  final diff = a.difference(
-      DateTime(DateTime.now().add(Duration(hours: 1)).year, 1, 1, 0, 0));
-  final diffInDays = diff.inDays;
-  if (a.day == 20) {
-    debugPrint(diffInDays.toString() + " " + a.toString());
-  }
-  return diffInDays.round();
-}
+// int _dayOfYear(DateTime a) {
+//   final diff = a.difference(
+//       DateTime(DateTime.now().add(Duration(hours: 1)).year, 1, 1, 0, 0));
+//   final diffInDays = diff.inDays;
+//   if (a.day == 20) {
+//     debugPrint(diffInDays.toString() + " " + a.toString());
+//   }
+//   return diffInDays.round();
+// }

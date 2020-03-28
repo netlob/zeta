@@ -27,8 +27,13 @@ class _AuthenticateState extends State<Authenticate> {
           Container(
               child: SafeArea(
                   bottom: true,
-                  child: Scaffold(
-                      backgroundColor: Colors.transparent, body: LoginView())))
+                  child: LayoutBuilder(builder:
+                      (BuildContext context, BoxConstraints constraints) {
+                    return Scaffold(
+                        resizeToAvoidBottomPadding: false,
+                        backgroundColor: Colors.transparent,
+                        body: LoginView());
+                  })))
         ]));
   }
 }

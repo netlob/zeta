@@ -46,15 +46,16 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
           .showSnackBar(SnackBar(content: Text('Niet ingelogd :(')));
       _refreshController.refreshFailed();
     } else {
-      List<dynamic> list = await zermelo.appointments.get(
-          DateTime.fromMicrosecondsSinceEpoch(widget.day.appointments[0].start),
-          DateTime.fromMicrosecondsSinceEpoch(
-              widget.day.appointments[widget.day.appointments.length - 1].end));
-
-      debugPrint(list.toString());
-      list.forEach((f) => {
-            setState(() => {this.appointments.add(f)})
-          });
+      // List<dynamic> list = await zermelo.appointments.get(
+      //     DateTime.fromMicrosecondsSinceEpoch(widget.day.appointments[0].start),
+      //     DateTime.fromMicrosecondsSinceEpoch(
+      //         widget.day.appointments[widget.day.appointments.length - 1].end));
+      Scaffold.of(this.context)
+          .showSnackBar(SnackBar(content: Text('Gebruik de gele knop :)')));
+      // debugPrint(list.toString());
+      // list.forEach((f) => {
+      //       setState(() => {this.appointments.add(f)})
+      //     });
       _refreshController.refreshCompleted();
     }
   }
@@ -104,15 +105,15 @@ class _DayOverviewState extends State<DayOverview> with WidgetsBindingObserver {
                 //         const BoxConstraints(minWidth: double.infinity),
                 //    child:
                 Container(
-                    height: 520,
-                    width: 350,
+                    height: (MediaQuery.of(context).copyWith().size.height -
+                        (318 - MediaQuery.of(context).padding.top)),
+                    width: (MediaQuery.of(context).copyWith().size.width - 60),
                     child: Stack(children: <Widget>[
                       Visibility(
                           child: Center(
-                              child: Text(
-                            "Aan het laden...",
-                            style: Theme.of(context).textTheme.title,
-                          )),
+                              child: Text("Aan het laden...",
+                                  style:
+                                      Theme.of(context).textTheme.headline6)),
                           visible: (appointments.length == 0)),
                       SmartRefresher(
                           enablePullDown: true,
