@@ -1,46 +1,103 @@
 name: zeta
-description: A modern, cross-platform Zermelo app with some extra features, like notifications on a schedule-change. Built with Flutter.
+description: A flutter boilerplate project created using MobX and Provider.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# Read more about versioning at semver.org.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  pull_to_refresh:
-  provider:
-  http:
-  intl:
-  # flutter_pulltorefresh: ^1.5.8
+
+  flutter_localizations:
+    sdk: flutter
+  flutter_cupertino_localizations: ^1.0.1
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  hive:
+  cupertino_icons: ^0.1.3
+
+  # A composable, Future-based library for making HTTP requests.
+  http: ^0.12.0+4
+
+  get_it:
+
+  # The following adds the launcher icon support to your application.
+  # run below mentioned commands to generate launcher icons
+  # flutter packages get
+  # flutter packages pub run flutter_launcher_icons:main
+  flutter_launcher_icons: ^0.7.4
+
+  pull_to_refresh:
+
+  # Flogs, a powerful logging framework
+  f_logs: ^1.2.2
+
+  hive: ^1.4.1+1
   hive_flutter:
+  path_provider:
+
+  # MobX is a library for reactively managing the state of your applications. Use the power of
+  # observables, actions, and reactions to supercharge your Dart and Flutter apps.
+  mobx: ^0.4.0+1
+  flutter_mobx: ^0.3.6
+  mobx_codegen: ^0.4.0+1
+
+  # An helper to easily exposes a value using InheritedWidget without having to write one.
+  provider: ^4.0.1
+
+  # String validation and sanitization for Dart. Dart 2-compatible version of validator
+  validators: ^2.0.0+1
+
+  # A powerful Http client for Dart
+  dio: 3.0.8
+
+  flushbar: ^1.10.4
+
+  # Material Dialog
+  material_dialog: ^0.0.9
+
+  # Dependency injection
+  inject:
+    git:
+      url: https://github.com/google/inject.dart.git
+      path: package/inject
+      ref: 7c3cbf6
+
+dependency_overrides:
+  source_gen: 0.9.4+7
+  analyzer: ^0.39.4
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  json_serializable: ^3.2.5
+  build_runner: ^1.7.3
+  inject_generator:
+    git:
+      url: https://github.com/google/inject.dart.git
+      path: package/inject_generator
+      ref: 7c3cbf6
+
+flutter_icons:
+  image_path: "assets/icons/ic_launcher.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+# following page: https://www.dartlang.org/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -49,80 +106,27 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-  #  - images/a_dot_burr.jpeg
+    - assets/icons/
+    - assets/lang/
 
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
+  # https://flutter.io/assets-and-images/#resolution-aware.
 
   # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+  # https://flutter.io/assets-and-images/#from-packages
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
-    - family: Nunito
+    - family: ProductSans
       fonts:
-        - asset: assets/fonts/NunitoSans-Black.ttf
-          weight: 900
-        - asset: assets/fonts/NunitoSans-BlackItalic.ttf
-          weight: 900
+        - asset: assets/fonts/Product-Sans-Regular.ttf
+        - asset: assets/fonts/Product-Sans-Italic.ttf
           style: italic
-
-        - asset: assets/fonts/NunitoSans-ExtraBold.ttf
-          weight: 800
-        - asset: assets/fonts/NunitoSans-ExtraBoldItalic.ttf
-          weight: 800
-          style: italic
-
-        - asset: assets/fonts/NunitoSans-Bold.ttf
+        - asset: assets/fonts/Product-Sans-Bold.ttf
           weight: 700
-        - asset: assets/fonts/NunitoSans-BoldItalic.ttf
-          weight: 700
-          style: italic
-
-        - asset: assets/fonts/NunitoSans-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/NunitoSans-SemiBoldItalic.ttf
-          weight: 600
-          style: italic
-
-        # - asset: assets/fonts/NunitoSans-Medium.ttf
-        #   weight: 500
-        # - asset: assets/fonts/NunitoSans-MediumItalic.ttf
-        #   weight: 500
-        #   style: italic
-
-        - asset: assets/fonts/NunitoSans-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/NunitoSans-Italic.ttf
-          weight: 400
-          style: italic
-
-        - asset: assets/fonts/NunitoSans-Light.ttf
-          weight: 300
-        - asset: assets/fonts/NunitoSans-LightItalic.ttf
-          weight: 300
-          style: italic
-
-        - asset: assets/fonts/NunitoSans-Light.ttf
-          weight: 100
-        - asset: assets/fonts/NunitoSans-LightItalic.ttf
-          weight: 100
-          style: italic
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.io/custom-fonts/#from-packages

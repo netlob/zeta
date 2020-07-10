@@ -1,4 +1,4 @@
-import 'package:zeta/zermelo/Appointment/Appointment.dart';
+import 'package:zeta/services/zermelo/Appointment/Appointment.dart';
 
 class Day {
   final DateTime date;
