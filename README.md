@@ -4,6 +4,8 @@ A modern, cross-platform [Zermelo](https://www.zermelo.nl/) app with some extra 
 
 [GitHub Project Board](https://github.com/Netlob/zeta/projects/1)
 
+![screenshots](https://media.discordapp.net/attachments/600450283423662082/702582680780275753/New_Project_5.png "Screenshots")
+
 ## Debug instructions
 Make sure to install Flutter [(installation instructions)](https://flutter.dev/docs/get-started/install) and Xcode (for IOS).
 
